@@ -1,0 +1,2218 @@
+:root {
+    --wpwa-primary: var(--wp--preset--color--primary, #25d366);
+    --wpwa-primary-hover: var(--wp--preset--color--secondary, #128c7e);
+    --wpwa-accent: var(--wp--preset--color--vivid-green-cyan, #075e54);
+    --wpwa-white: #ffffff;
+    --wpwa-bg-light: #f8fafc;
+    --wpwa-border: #e2e8f0;
+    --wpwa-text-main: #1e293b;
+    --wpwa-text-muted: #64748b;
+    --wpwa-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --wpwa-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --wpwa-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --wpwa-radius: 12px;
+    --wpwa-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Global Button Refinement */
+/* Catalog Layout & Sidebar Overhaul */
+.wpwa-catalog-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.wpwa-sidebar {
+    width: 25%;
+    min-width: 260px;
+    position: sticky;
+    top: 30px;
+    align-self: flex-start;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Sticky Sidebar */
+.wpwa-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.wpwa-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wpwa-sidebar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+.wpwa-filter-widget {
+    background: transparent;
+    padding: 0;
+}
+
+.wpwa-filter-widget .widget-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: #1a202c;
+    border: none;
+    padding: 0;
+}
+
+.wpwa-filter-row {
+    margin-bottom: 20px;
+}
+
+.wpwa-filter-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #718096;
+    margin-bottom: 6px;
+}
+
+.wpwa-sidebar-input {
+    width: 100%;
+    height: 48px !important;
+    padding: 0 15px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    background: #ffffff !important;
+    color: #4a5568 !important;
+}
+
+.wpwa-price-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.wpwa-btn-apply {
+    width: 100%;
+    height: 44px;
+    padding: 0 20px;
+    background: #4a7cfe;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* Tighter */
+}
+
+.wpwa-btn-apply:hover {
+    background: #3b6bdc;
+    box-shadow: 0 4px 12px rgba(74, 124, 254, 0.2);
+}
+
+.wpwa-btn-clear {
+    margin-top: 15px;
+    display: block;
+    font-size: 13px;
+    color: #a0aec0;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Catalog Layout - Respect Theme Container */
+.wpwa-catalog-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.wpwa-main-content-area {
+    flex: 1;
+    /* Take up remaining space */
+    min-width: 0;
+    /* Prevent flex-item from overflow issues */
+    width: 100%;
+}
+
+/* Product Grid - Force 3 Columns on Desktop with Tighter Gap */
+.wpwa-product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+}
+
+@media (max-width: 991px) {
+    .wpwa-product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .wpwa-product-info {
+        padding: 12px !important;
+        /* Tighter padding for mobile */
+    }
+
+    .wpwa-product-info h3 {
+        font-size: 16px !important;
+        /* Larger titles on mobile */
+        margin-bottom: 2px !important;
+    }
+
+    .wpwa-excerpt {
+        font-size: 11px !important;
+        margin-bottom: 2px !important;
+        line-height: 1.4 !important;
+    }
+
+    .wpwa-price-value {
+        font-size: 16px !important;
+    }
+
+    .wpwa-card-price-row {
+        margin-bottom: 0px !important;
+    }
+
+    .wpwa-card-footer {
+        padding-top: 2px !important;
+        margin-top: 5px !important;
+    }
+
+    .wpwa-more-link {
+        font-size: 11px !important;
+        /* Compact "Selengkapnya" */
+        gap: 3px !important;
+    }
+
+    .wpwa-more-link svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .wpwa-action-btn-wa svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* Mobile Filter Trigger Bar (Nav Bar Style) */
+.wpwa-mobile-filter-trigger {
+    display: none;
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.wpwa-mobile-filter-trigger span {
+    font-weight: 700;
+    font-size: 14px;
+    color: #1a202c;
+}
+
+/* Sidebar Styling */
+.wpwa-sidebar {
+    width: 25%;
+    min-width: 260px;
+    position: sticky;
+    top: 30px;
+    align-self: flex-start;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+/* Hide mobile filter on desktop */
+.wpwa-mobile-only {
+    display: none !important;
+}
+
+@media (max-width: 991px) {
+    .wpwa-mobile-filter-trigger {
+        display: flex;
+    }
+
+    /* Hide desktop sidebar on mobile */
+    .wpwa-desktop-only {
+        display: none !important;
+    }
+
+    .wpwa-sidebar.wpwa-mobile-only {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 9999999 !important;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0 !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        pointer-events: none;
+        margin: 0 !important;
+    }
+
+    .wpwa-sidebar.wpwa-active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        /* Enable clicks when active */
+    }
+
+    .wpwa-filter-widget {
+        background: #ffffff;
+        width: 100% !important;
+        margin: 0 !important;
+        /* Full width Bottom Sheet */
+        padding: 30px 24px 40px;
+        /* Extra bottom padding for safe area */
+        border-radius: 24px 24px 0 0 !important;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .wpwa-sidebar.wpwa-active .wpwa-filter-widget {
+        transform: translateY(0);
+    }
+}
+
+/* Card Price Redesign - Below Description */
+/* Base Price Styles */
+.wpwa-price-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.wpwa-price-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a202c;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+    color: #a0aec0;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.wpwa-single-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.wpwa-single-price-regular.strikethrough {
+    font-size: 1.1rem;
+    color: #94a3b8;
+}
+
+.wpwa-single-price {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1d2327;
+    margin: 0 !important;
+}
+
+/* Sale Badge Styles */
+.wpwa-sale-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ef4444;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    z-index: 10;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    letter-spacing: 0.5px;
+}
+
+/* Grid Price Styles */
+.wpwa-price .strikethrough {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-right: 6px;
+}
+
+.wpwa-price .sale-price {
+    color: #ef4444;
+    font-weight: 800;
+}
+
+/* Card Styles */
+.wpwa-product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f4f8;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wpwa-product-card:hover {
+    transform: none;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+.wpwa-product-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9 !important;
+    /* Strictly 16:9 */
+    background: #f7fafc;
+    overflow: hidden;
+}
+
+.wpwa-product-image img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Floating Badge */
+.wpwa-price-badge {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 10px !important;
+    /* Slightly smaller price text */
+    font-weight: 700;
+    color: #2d3748;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+.wpwa-price-badge span {
+    color: #4a7cfe;
+    margin-left: 2px;
+}
+
+.wpwa-product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpwa-product-info h3 {
+    margin: 0 0 8px 0 !important;
+    /* Fixed gap below title */
+    font-size: 17px !important;
+    /* Increased font size */
+    font-weight: 500 !important;
+    color: #000000 !important;
+    line-height: 1.2 !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+    overflow: visible !important;
+}
+
+.wpwa-product-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.wpwa-product-rating .wpwa-star-rating-display {
+    gap: 2px;
+}
+
+.wpwa-product-rating .wpwa-star-rating-display svg {
+    width: 14px;
+    height: 14px;
+}
+
+.wpwa-rating-number {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fbbf24;
+}
+
+.wpwa-product-info h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.wpwa-excerpt {
+    font-size: 12px !important;
+    color: #718096;
+    line-height: 1.5;
+    margin-bottom: 0px !important;
+    /* Zero gap below excerpt */
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+
+.wpwa-excerpt p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Card Price Separators */
+.wpwa-card-price-row {
+    margin: 8px 0 !important;
+    padding: 8px 0 !important;
+    border-top: 1px solid #f0f4f8 !important;
+    border-bottom: 1px solid #f0f4f8 !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Rest of Card Styles */
+.wpwa-product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f4f8;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wpwa-product-card:hover {
+    transform: none;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+.wpwa-product-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9 !important;
+    /* Strictly 16:9 */
+    background: #f7fafc;
+    overflow: hidden;
+}
+
+.wpwa-product-image img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Card Footer Actions */
+.wpwa-card-footer {
+    padding-top: 2px !important;
+    /* Ultra tight gap */
+    margin-top: 0px !important;
+    border-top: 1px solid #f7fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wpwa-more-link {
+    font-size: 13px;
+    font-weight: 500 !important;
+    color: #1a202c;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Slightly more breathe room */
+}
+
+.wpwa-more-link svg {
+    transition: transform 0.2s;
+}
+
+.wpwa-more-link:hover svg {
+    transform: translateX(3px);
+}
+
+.wpwa-action-btn-wa {
+    width: 24px;
+    height: 24px;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease !important;
+    padding: 0 !important;
+    color: #000000 !important;
+    /* Pure Black for the icon */
+    box-shadow: none !important;
+}
+
+.wpwa-action-btn-wa:hover {
+    transform: scale(1.15) !important;
+    color: #25D366 !important;
+    /* Brand green only on hover */
+}
+
+/* Pagination - Reference style */
+/* Enhanced Pagination */
+/* Enhanced Pagination - Matches Buy Button Style */
+.wpwa-pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    clear: both;
+}
+
+.wpwa-pagination ul.page-numbers {
+    display: flex !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    align-items: center !important;
+    border: none !important;
+}
+
+.wpwa-pagination .page-numbers {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    padding: 0 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    line-height: normal;
+}
+
+.wpwa-pagination .page-numbers:hover {
+    border-color: #25d366 !important;
+    color: #25d366 !important;
+    background: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: none !important;
+}
+
+.wpwa-pagination .page-numbers.current {
+    background: #25d366 !important;
+    border-color: #25d366 !important;
+    color: #ffffff !important;
+    cursor: default;
+    transform: none;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3) !important;
+}
+
+.wpwa-pagination .page-numbers.prev,
+.wpwa-pagination .page-numbers.next {
+    font-weight: 700;
+    padding: 0 20px !important;
+    /* Wider buttons */
+    width: auto !important;
+}
+
+.wpwa-pagination .page-numbers.prev:hover,
+.wpwa-pagination .page-numbers.next:hover {
+    background: #25d366 !important;
+    border-color: #25d366 !important;
+    color: #ffffff !important;
+}
+
+.wpwa-pagination .page-numbers.dots {
+    border: none;
+    background: transparent;
+    pointer-events: none;
+    color: #cbd5e0;
+}
+
+.wpwa-pagination .page-numbers.dots {
+    background: transparent;
+    border: none;
+    min-width: unset;
+    box-shadow: none;
+    color: #cbd5e0;
+    pointer-events: none;
+}
+
+.wpwa-pagination .screen-reader-text {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .wpwa-catalog-layout {
+        flex-direction: column;
+    }
+
+    .wpwa-sidebar {
+        width: 100%;
+    }
+}
+
+.wpwa-buy-button {
+    font-family: var(--wpwa-font);
+    background-color: #25d366 !important;
+    /* Force WhatsApp Green */
+    color: #ffffff !important;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    /* User requested 10px */
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    /* Match the "MULAI SEKARANG!" vibe */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    /* Uniform gap */
+    text-decoration: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+.wpwa-buy-button:hover {
+    background-color: #192a3d !important;
+    /* User requested #192a3d */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wpwa-buy-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wpwa-buy-button svg {
+    fill: currentColor;
+    /* Ensure icon uses text color (white) */
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Remove Shine Effect as it wasn't in the reference */
+.wpwa-buy-button::after {
+    display: none;
+}
+
+/* Product Grid Shortcode */
+.wpwa-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.wpwa-product-card {
+    background: var(--wpwa-white);
+    border-radius: var(--wpwa-radius);
+    border: 1px solid var(--wpwa-border);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wpwa-product-card:hover {
+    border-color: var(--wpwa-primary);
+    box-shadow: var(--wpwa-shadow-lg);
+}
+
+.wpwa-product-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--wpwa-bg-light);
+}
+
+.wpwa-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.wpwa-product-card:hover .wpwa-product-image img {
+    transform: scale(1.05);
+}
+
+.wpwa-product-info {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpwa-product-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--wpwa-text-main);
+    /* Line Clamping - max 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+
+    /* Modern Filter Bar v2 */
+    .wpwa-filter-bar-v2 {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 24px;
+        border-radius: 16px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .wpwa-filter-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-end;
+    }
+
+    .wpwa-filter-group {
+        flex: 1;
+        min-width: 180px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .wpwa-filter-group label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #8c98a4;
+        letter-spacing: 0.5px;
+    }
+
+    .wpwa-filter-input {
+        height: 48px;
+        padding: 0 16px;
+        border: 1.5px solid #edf2f7;
+        border-radius: 12px;
+        font-size: 14px;
+        background: #ffffff;
+        width: 100%;
+        transition: all 0.3s ease;
+        color: #2d3748;
+        outline: none !important;
+    }
+
+    .wpwa-filter-input:focus {
+        border-color: var(--wpwa-primary);
+        box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.1);
+    }
+
+    .wpwa-price-inputs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .wpwa-price-inputs span {
+        color: #cbd5e0;
+        font-weight: 500;
+    }
+
+    .wpwa-filter-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .wpwa-filter-apply {
+        height: 48px;
+        padding: 0 24px;
+        background: var(--wpwa-primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        /* Uniform gap */
+    }
+
+    .wpwa-filter-apply:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .wpwa-filter-clear {
+        width: 48px;
+        height: 48px;
+        background: #f7fafc;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #a0aec0;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+    .wpwa-filter-clear:hover {
+        background: #fed7d7;
+        color: #e53e3e;
+    }
+
+    @media (max-width: 768px) {
+        .wpwa-filter-grid {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .wpwa-filter-actions {
+            margin-top: 10px;
+        }
+
+        .wpwa-filter-apply {
+            flex: 1;
+        }
+    }
+
+    font-weight: 800;
+    color: var(--wpwa-primary-hover);
+    margin-bottom: 15px;
+}
+
+.wpwa-excerpt {
+    font-size: 0.9rem;
+    color: var(--wpwa-text-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    flex-grow: 1;
+    /* Take up available space */
+
+    /* Line Clamping - max 3 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+    min-height: 4.8em;
+    /* Force consistent excerpt height */
+}
+
+.wpwa-button-wrapper {
+    margin-top: auto;
+    /* Push to bottom */
+    width: 100%;
+}
+
+/* Universal Container Fallback */
+.wpwa-container {
+    max-width: 1290px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Single Product Page - Respect Container */
+.wpwa-single-product-container {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-family: var(--wpwa-font);
+}
+
+.wpwa-single-product-content {
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    /* Shrink image column slightly */
+    gap: 50px;
+    align-items: start;
+}
+
+/* Fluid Gallery */
+.wpwa-tokped-gallery {
+    width: 100%;
+    margin: 0 auto 15px;
+    /* Reduced from 30px */
+}
+
+/* Main Image (Top) */
+.wpwa-tokped-main-image {
+    background: #fff;
+    border-radius: 16px;
+    /* Larger radius like reference */
+    overflow: hidden;
+    border: 1px solid var(--wpwa-border);
+    /* Card style shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+
+    /* Change to Landscape Ratio to match reference */
+    aspect-ratio: 4 / 3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    /* Internal padding for 'frame' look */
+    position: relative;
+    box-sizing: border-box;
+    cursor: zoom-in;
+}
+
+.wpwa-tokped-main-image img.wpwa-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill the landscape box */
+    object-position: center;
+    display: block;
+    border-radius: 12px;
+    /* Inner radius */
+    transition: transform 0.3s ease;
+}
+
+.wpwa-tokped-main-image:hover img.wpwa-main-img {
+    transform: scale(1.05);
+}
+
+.wpwa-zoom-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    width: 40px;
+    /* Slightly larger for better precision */
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Flex centering */
+    padding: 0;
+    /* Reset padding to ensure center */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.wpwa-tokped-main-image:hover .wpwa-zoom-icon {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.wpwa-zoom-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    /* Remove inline spacing */
+    stroke: var(--wpwa-primary);
+    stroke-width: 2.5;
+    /* Make it a bit bolder */
+}
+
+/* Thumbnails Wrapper with Arrows */
+.wpwa-tokped-thumb-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Space out arrows and list */
+    gap: 8px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Slider Arrows */
+.wpwa-slider-arrow {
+    background: white;
+    border: 1px solid var(--wpwa-border);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    z-index: 2;
+    padding-bottom: 4px;
+}
+
+.wpwa-slider-arrow:hover {
+    background: var(--wpwa-primary);
+    color: white;
+    border-color: var(--wpwa-primary);
+}
+
+.wpwa-slider-arrow.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f5f5f5;
+    color: #ccc;
+}
+
+/* Thumbnails (Bottom - Horizontal) */
+.wpwa-tokped-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px;
+    /* Space for shadow/focus */
+    scroll-behavior: smooth;
+    flex: 1;
+    /* Take available width */
+
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    /* Centering items if few */
+    justify-content: flex-start;
+}
+
+.wpwa-tokped-thumbnails::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Thumbnail */
+.wpwa-tokped-thumb {
+    /* Responsive width calculation for 5 items: (100% - gaps) / 5 */
+    /* Approx calculation, using fixed min-width for simplicity but responsive */
+    width: calc(20% - 8px);
+    min-width: 70px;
+    /* Minimum size */
+    max-width: 90px;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--wpwa-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--wpwa-bg-light);
+}
+
+.wpwa-tokped-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.wpwa-tokped-thumb:hover {
+    border-color: var(--wpwa-primary);
+}
+
+.wpwa-tokped-thumb.active {
+    border-color: var(--wpwa-primary);
+    border-width: 3px;
+    box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wpwa-tokped-gallery {
+        max-width: 100%;
+    }
+
+    .wpwa-tokped-main-image {
+        border-radius: 8px;
+    }
+}
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 480px) {
+
+    /* Global Mobile Fix - Contain Everything */
+    .wpwa-tokped-gallery {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto 15px auto !important;
+        padding: 0 !important;
+        /* Let children handle spacing or theme handle outer padding */
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        /* Prevent any accidental overflow from affecting page */
+    }
+
+    /* Main Image Landscape */
+    .wpwa-tokped-main-image {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--wpwa-border);
+        box-shadow: none;
+        /* Simplify box model */
+        box-sizing: border-box !important;
+        padding: 4px;
+        /* Minimal internal padding */
+        aspect-ratio: 4 / 3;
+    }
+
+    .wpwa-tokped-main-image img.wpwa-main-img {
+        object-position: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+
+    /* Thumbnails Sizing */
+    .wpwa-tokped-thumb-wrapper {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 0 4px;
+        gap: 12px;
+        /* More space between items */
+    }
+
+    .wpwa-tokped-thumb {
+        /* Show fewer items (approx 3.5 per view) so they are larger */
+        width: 22% !important;
+        min-width: 65px !important;
+        max-width: 85px !important;
+        height: auto;
+        border-radius: 8px;
+        flex-shrink: 0;
+        border-width: 1px;
+    }
+
+    /* Arrows */
+    .wpwa-slider-arrow {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        z-index: 5;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0f0f0;
+    }
+
+    /* Hide scrollbar strictly */
+    .wpwa-tokped-thumbnails {
+        gap: 12px;
+        /* Match wrapper gap */
+    }
+
+    .wpwa-tokped-thumbnails::-webkit-scrollbar {
+        display: none;
+        height: 0;
+        width: 0;
+    }
+}
+
+/* Lightbox Modal - Order Form Style */
+.wpwa-lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Darker overlay like screenshot */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s;
+
+    /* Flex Centering */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.wpwa-lightbox-wrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0;
+    /* Image takes full space or add padding if needed */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: zoomIn 0.3s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Ensure image adheres to border radius */
+}
+
+.wpwa-lightbox-content {
+    margin: 0;
+    display: block;
+
+    /* Fixed Size & Ratio */
+    width: 800px !important;
+    height: 500px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    object-fit: cover !important;
+    background: #fff;
+
+    /* Remove old styles */
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.wpwa-lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background: #f0f0f0;
+    /* Light grey circle background */
+    color: #555;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.wpwa-lightbox-close:hover {
+    background: var(--wpwa-primary, #333);
+    /* Use plugin primary color or fallback to dark */
+    color: #fff;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-color: var(--wpwa-primary, #333);
+}
+
+.wpwa-lightbox-close svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .wpwa-lightbox-wrapper {
+        width: 100%;
+        height: auto;
+        max-width: 95vw;
+        /* Slightly wider on mobile */
+    }
+
+    .wpwa-lightbox-content {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important;
+        /* Force 16:9 Cinema Ratio */
+        max-height: 80vh !important;
+    }
+
+    .wpwa-lightbox {
+        padding: 15px;
+    }
+
+    .wpwa-lightbox-close {
+        top: 10px;
+        right: 10px;
+        background: #fff;
+        /* White bg on mobile for better contrast over image */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.wpwa-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--wpwa-text-muted);
+    margin-bottom: 12px;
+}
+
+.wpwa-breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.wpwa-breadcrumb a:hover {
+    color: var(--wpwa-primary);
+}
+
+.wpwa-breadcrumb .sep {
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+.wpwa-breadcrumb .current {
+    color: var(--wpwa-text-main);
+    font-weight: 500;
+}
+
+.wpwa-sticky-info {
+    position: sticky;
+    top: 100px;
+    /* Offset for theme header */
+    height: fit-content;
+}
+
+.wpwa-single-title {
+    font-size: 1.75rem;
+    /* Reduced from 2.6rem */
+    font-weight: 700;
+    color: var(--wpwa-text-main);
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.wpwa-product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    /* Slightly smaller */
+    color: var(--wpwa-text-muted);
+}
+
+.wpwa-meta-item strong {
+    color: var(--wpwa-text-main);
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.wpwa-meta-item a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.wpwa-meta-item a:hover {
+    color: var(--wpwa-primary);
+}
+
+.wpwa-single-price {
+    font-size: 1.5rem;
+    /* Reduced from 2rem */
+    font-weight: 800;
+    color: var(--wpwa-primary-hover);
+    margin: 0 0 24px 0;
+}
+
+.wpwa-single-description {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--wpwa-text-muted);
+    border-top: 1px solid var(--wpwa-border);
+    padding-top: 24px;
+    margin-bottom: 15px;
+    /* Reduced from 32px */
+}
+
+.wpwa-single-buy-btn {
+    width: 100% !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    padding: 14px 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    transition: all 0.3s ease !important;
+    text-transform: none !important;
+}
+
+.wpwa-single-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.wpwa-single-buy-btn svg {
+    margin-top: -1px;
+}
+
+/* Modal Styling - Desktop Redesign (2 Columns) */
+.wpwa-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Overlay */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    /* Flexbox for vertical centering */
+    display: none;
+    /* JS toggles this to flex */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure flex is used when enabled */
+.wpwa-modal[style*="display: block"] {
+    display: flex !important;
+}
+
+.wpwa-modal-content {
+    background-color: #fff;
+    margin: auto;
+    /* Centered by flex parent */
+    padding: 25px;
+    /* Reduced padding */
+    border-radius: 16px;
+    width: 90%;
+    max-width: 850px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease-out;
+    max-height: 90vh;
+    /* Prevent overflowing screen height */
+    overflow-y: auto;
+    /* Scroll inside modal if needed */
+}
+
+.wpwa-modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+    /* Reduced */
+    border-bottom: 1px solid var(--wpwa-border);
+    padding-bottom: 10px;
+    /* Reduced */
+}
+
+.wpwa-modal-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.4rem;
+    /* Slightly smaller header */
+    color: var(--wpwa-text-main);
+}
+
+/* 2-Column Grid for Desktop */
+.wpwa-row-desktop {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Force equal height columns */
+    margin: 0 -10px;
+    align-items: stretch;
+}
+
+.wpwa-col-left {
+    width: 50%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpwa-col-right {
+    width: 50%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure Note field wrapper stretches to fill space */
+.wpwa-col-right .wpwa-form-row:last-child {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    /* Align perfectly to bottom */
+}
+
+/* Product Summary Card (Left) */
+.wpwa-product-summary-card h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: var(--wpwa-text-main);
+    border-bottom: 2px solid var(--wpwa-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Form total inside Left Column */
+.wpwa-form-total {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #fff;
+    /* White background for contrast inside grey column */
+    border-radius: 8px;
+    border: 1px solid var(--wpwa-border);
+    display: flex;
+    flex-direction: column;
+    /* Stack Label and Price */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 5px;
+}
+
+.wpwa-form-total span:first-child {
+    font-size: 1rem;
+    color: var(--wpwa-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpwa-form-total span:last-child {
+    font-size: 1.8rem;
+    color: var(--wpwa-primary);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* Close Button - refined to match screenshot (Green Circle) */
+.wpwa-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: #4cd964;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+.wpwa-close svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.wpwa-close:hover {
+    background: #40b957;
+    /* Slightly darker on hover */
+    transform: scale(1.05);
+}
+
+.wpwa-form-row {
+    margin-bottom: 12px;
+    /* Reduced vertical spacing */
+}
+
+.wpwa-form-row label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--wpwa-text-main);
+}
+
+.wpwa-form-row input,
+.wpwa-form-row textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--wpwa-border);
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.wpwa-form-row input:focus,
+.wpwa-form-row textarea:focus {
+    border-color: var(--wpwa-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+}
+
+/* Consistent compact sizing for textareas */
+#wpwa-address {
+    min-height: 45px;
+    height: 45px;
+    resize: vertical !important;
+    overflow: auto;
+}
+
+/* Note field specifically stretches */
+#wpwa-note {
+    width: 100%;
+    min-height: 45px;
+    /* Minimum size */
+    flex: 1 1 auto;
+    /* Grow to fill space */
+    height: auto;
+    resize: vertical !important;
+    /* Allow user override */
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+/* Total Price Display - Dark Color */
+#wpwa-modal-total-display {
+    color: #192a3d;
+    /* Requested Color */
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.wpwa-modal-footer {
+    margin-top: 15px;
+    /* Reduced margin */
+    text-align: center;
+}
+
+/* Submit Button inherits .wpwa-buy-button style but ensures full width in footer */
+.wpwa-submit-order {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* Explicit gap for tighter look */
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 10px !important;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive Override */
+@media (max-width: 768px) {
+    .wpwa-modal {
+        align-items: center !important;
+        /* Center vertically if possible */
+        padding: 10px;
+    }
+
+    .wpwa-modal-content {
+        margin: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 15px;
+        border-radius: 0;
+        /* Native look for full-width */
+        max-height: 95vh;
+        position: relative;
+    }
+
+    .wpwa-row-desktop {
+        flex-direction: column !important;
+        margin: 0;
+        /* Clear negative margins from desktop */
+        gap: 10px;
+    }
+
+    .wpwa-col-left,
+    .wpwa-col-right {
+        width: 100% !important;
+        padding: 0 !important;
+        /* Use parent padding for symmetry */
+    }
+
+    .wpwa-col-left {
+        order: -1;
+    }
+
+    .wpwa-col-right .wpwa-form-row:last-child {
+        margin-bottom: 0px;
+    }
+}
+
+.wpwa-submit-order:hover {
+    background: var(--wpwa-primary-hover);
+}
+
+@media (max-width: 768px) {
+    .wpwa-single-product-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .wpwa-single-title {
+        font-size: 1.75rem;
+    }
+
+    .wpwa-single-buy-btn {
+        max-width: 100%;
+    }
+}
+
+/* Custom Product Tabs - Extremely Cool & User Friendly UI */
+.wpwa-product-tabs {
+    grid-column: 1 / -1 !important;
+    margin: 5px 0 40px;
+    /* Drastically reduced margin-top */
+    background: #fff;
+    border-radius: 16px;
+    /* Match gallery radius */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* Match gallery shadow */
+    overflow: hidden;
+    clear: both;
+    border: 1px solid var(--wpwa-border);
+    /* Match gallery border */
+}
+
+.wpwa-tab-nav {
+    display: flex;
+    background: #ffffff;
+    border-bottom: 2px solid #f1f5f9;
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    justify-content: center;
+    /* Centered tabs */
+    white-space: nowrap;
+    gap: 40px;
+    /* Space between tabs */
+}
+
+.wpwa-tab-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.wpwa-tab-trigger {
+    padding: 18px 10px;
+    /* Reduced vertical padding */
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 700;
+    font-size: inherit;
+    /* Inherit theme font size */
+    font-family: inherit;
+    /* Inherit theme font family */
+    color: inherit;
+    /* Sync with theme heading/text color */
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.wpwa-tab-trigger:hover {
+    color: var(--wpwa-primary);
+}
+
+.wpwa-tab-trigger.active {
+    color: var(--wpwa-primary) !important;
+    border-bottom-color: var(--wpwa-primary) !important;
+    opacity: 1;
+}
+
+/* Active indicator matching theme accent */
+.wpwa-tab-trigger.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--wpwa-primary);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Main Product Page Tabs (Full Width) */
+.wpwa-product-tabs {
+    margin-top: 60px;
+    width: 100%;
+    clear: both;
+}
+
+.wpwa-tab-content-wrapper {
+    padding: 30px 40px;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+}
+
+.wpwa-tab-panel {
+    display: none !important;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.wpwa-tab-panel.active {
+    display: block !important;
+    animation: wpwaSmoothFade 0.5s ease;
+}
+
+@keyframes wpwaSmoothFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Review Tab Styles */
+.wpwa-reviews-summary {
+    background: var(--wpwa-bg-light);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    border: 1px solid var(--wpwa-border);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.wpwa-avg-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.wpwa-avg-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--wpwa-text-main);
+    line-height: 1;
+}
+
+.wpwa-total-text {
+    font-size: 14px;
+    color: var(--wpwa-text-muted);
+}
+
+.wpwa-star-rating-display {
+    display: flex;
+    gap: 4px;
+    color: #fbbf24;
+    /* Star gold */
+}
+
+.wpwa-star-rating-display svg.empty {
+    color: #e2e8f0;
+}
+
+.wpwa-card-rating {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 4px !important;
+    margin-bottom: 10px !important;
+    flex-wrap: nowrap !important;
+}
+
+.wpwa-card-rating .wpwa-star-rating-display {
+    display: inline-flex !important;
+    gap: 2px !important;
+    width: auto !important;
+}
+
+.wpwa-card-rating .wpwa-star-rating-display svg {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.wpwa-rating-count {
+    display: inline-block !important;
+    font-size: 12px !important;
+    color: var(--wpwa-text-muted) !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    line-height: normal !important;
+}
+
+.wpwa-reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 50px 0;
+}
+
+.wpwa-review-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--wpwa-border);
+}
+
+.wpwa-review-item:last-child {
+    border-bottom: none;
+}
+
+.wpwa-review-header {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.wpwa-review-avatar img {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.wpwa-review-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.wpwa-review-author {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--wpwa-text-main);
+}
+
+.wpwa-review-date {
+    font-size: 13px;
+    color: var(--wpwa-text-muted);
+}
+
+.wpwa-review-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #475569;
+}
+
+/* Star Rating Selector */
+.wpwa-rating-selector-wrapper {
+    margin-bottom: 25px;
+}
+
+.wpwa-rating-selector-wrapper label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--wpwa-text-main);
+}
+
+.wpwa-star-rating-selector {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+}
+
+.wpwa-star-rating-selector input {
+    display: none;
+}
+
+.wpwa-star-rating-selector label {
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    margin-bottom: 0;
+}
+
+.wpwa-star-rating-selector label svg {
+    width: 32px;
+    height: 32px;
+}
+
+.wpwa-star-rating-selector input:checked~label,
+.wpwa-star-rating-selector label:hover,
+.wpwa-star-rating-selector label:hover~label {
+    color: #fbbf24;
+}
+
+.wpwa-star-rating-selector label:hover svg {
+    fill: #fbbf24;
+}
+
+.wpwa-star-rating-selector input:checked~label svg {
+    fill: #fbbf24;
+}
+
+/* Comment Form Modernization */
+#wpwa-review-form .comment-form-comment label,
+#wpwa-review-form .wpwa-form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--wpwa-text-main);
+}
+
+#wpwa-review-form textarea,
+#wpwa-review-form input[type="text"],
+#wpwa-review-form input[type="email"] {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-family: inherit;
+    font-size: 15px;
+    transition: all 0.2s;
+}
+
+#wpwa-review-form textarea:focus,
+#wpwa-review-form input:focus {
+    background: #fff;
+    border-color: var(--wpwa-primary);
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .wpwa-single-product-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .wpwa-single-title {
+        font-size: 2rem;
+    }
+
+    .wpwa-product-tabs {
+        margin: 30px 0;
+        border-radius: 12px;
+    }
+
+    .wpwa-tab-nav {
+        justify-content: flex-start;
+        /* Scrollable from start on mobile */
+        padding: 0 15px;
+        gap: 25px;
+    }
+
+    .wpwa-tab-trigger {
+        padding: 18px 5px;
+        font-size: 14px;
+    }
+
+    .wpwa-tab-content-wrapper {
+        padding: 30px 20px;
+    }
+}
+
+/* Related Products Section */
+/* Related Products Section */
+.wpwa-related-products {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--wpwa-border);
+    clear: both;
+}
+
+.wpwa-section-title {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: var(--wpwa-text-main);
+    text-align: left;
+}
+
+/* Ensure grid matches archive style */
+.wpwa-related-products .wpwa-product-grid {
+    margin-top: 0;
+}
+
+/* Gutenberg Editor Preview Styles */
+.wpwa-block-related-wrapper {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+}
+
+.wpwa-block-preview-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.wpwa-block-preview-title .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.wpwa-block-preview-placeholder p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+@media (min-width: 992px) {
+    .wpwa-related-products .wpwa-product-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}

@@ -1,0 +1,74 @@
+# Copyright (C) 2026 WebEsia
+# This file is distributed under the same license as the WP WhatsApp Catalog plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP WhatsApp Catalog 11.2.0\n"
+"Report-Msgid-Bugs-To: https://webesia.com\n"
+"Last-Translator: Erwin Widianto <https://webesia.com>\n"
+"Language-Team: WebEsia <https://webesia.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-07T13:17:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: custom-script\n"
+
+msgid "Read More"
+msgstr ""
+
+msgid "Order Details"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Your Name"
+msgstr ""
+
+msgid "WhatsApp Number"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Send Order via WhatsApp"
+msgstr ""
+
+msgid "Total Estimate:"
+msgstr ""
+
+msgid "Product Filter"
+msgstr ""
+
+msgid "Reset Filter"
+msgstr ""
+
+msgid "No products found with those criteria."
+msgstr ""
+
+msgid "Category:"
+msgstr ""
+
+msgid "SKU:"
+msgstr ""
+
+msgid "Reviews (%d)"
+msgstr ""
+
+msgid "%d Reviews"
+msgstr ""
+
+msgid "Average Rating"
+msgstr ""
+
+msgid "Your Rating"
+msgstr ""
+
+msgid "Submit Review"
+msgstr ""
+
+msgid "Write Your Review"
+msgstr ""

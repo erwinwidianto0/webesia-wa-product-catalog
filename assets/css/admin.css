@@ -1,0 +1,740 @@
+/* Admin Styles for WA Product Catalog */
+.wpwa-meta-field {
+    margin-bottom: 15px;
+}
+
+.wpwa-meta-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Premium Metabox Framework */
+.wpwa-metabox-premium {
+    padding: 10px 0;
+}
+
+.wpwa-meta-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.wpwa-meta-field {
+    flex: 1;
+}
+
+.wpwa-meta-field.full-width {
+    width: 100%;
+}
+
+.wpwa-meta-field label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1d2327;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wpwa-meta-field label .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #2271b1;
+}
+
+.wpwa-meta-field input[type="text"],
+.wpwa-meta-field input[type="number"],
+.wpwa-meta-field textarea {
+    width: 100%;
+    border: 1px solid #ccd0d4;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 14px;
+    background: #fff;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.wpwa-meta-field input:focus,
+.wpwa-meta-field textarea:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1, 0 4px 12px rgba(34, 113, 177, 0.1);
+    outline: none;
+}
+
+/* Excerpt Specific Redesign */
+.wpwa-excerpt-metabox {
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    border: 1px solid #ccd0d4 !important;
+    background: #fff !important;
+    margin-bottom: 50px !important;
+    min-height: 200px !important;
+    clear: both !important;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.wpwa-premium-header {
+    background: #f6f7f7;
+    padding: 12px 20px;
+    border-bottom: 1px solid #ccd0d4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wpwa-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wpwa-header-left label {
+    margin: 0 !important;
+    font-size: 12px;
+    font-weight: 800;
+    color: #1d2327;
+}
+
+.wpwa-header-left .dashicons {
+    color: #2271b1;
+    font-size: 18px;
+}
+
+.wpwa-hint-text {
+    font-size: 11px;
+    font-style: italic;
+    color: #646970;
+}
+
+.wpwa-excerpt-metabox .wpwa-meta-field.no-label {
+    padding: 15px;
+}
+
+.wpwa-excerpt-metabox textarea {
+    min-height: 120px;
+    line-height: 1.6;
+    border: 1px solid #ccd0d4;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.wpwa-field-info {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed #dcdcde;
+}
+
+.wpwa-field-info p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    color: #8c8f94;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.wpwa-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.wpwa-status.status-pending {
+    background: #fff8e5;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.wpwa-status.status-completed {
+    background: #e7f4e4;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.wp-list-table th.column-order_number {
+    width: 100px;
+}
+
+.wp-list-table th.column-total_amount {
+    width: 120px;
+}
+
+.wp-list-table th.column-status {
+    width: 100px;
+}
+
+.column-customer_address {
+    width: 20%;
+}
+
+.column-customer_note {
+    width: 15%;
+}
+
+.column-actions {
+    white-space: nowrap;
+    width: 210px;
+}
+
+.column-actions .button {
+    margin-bottom: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Admin Styles for WA Product Catalog - PREMIUM V3 */
+.wpwa-reports-wrap {
+    margin: 30px 20px 0 0;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: #1d2327;
+}
+
+/* Reports Header & Filter */
+.wpwa-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.wpwa-filter-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#wpwa-custom-dates {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+#wpwa-custom-dates input[type="date"] {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #4b5563;
+    padding: 0;
+    width: 125px;
+}
+
+#wpwa-custom-dates button {
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+.wpwa-export-btn {
+    background: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 8px 15px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #10b981 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.wpwa-export-btn:hover {
+    color: #fff !important;
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2) !important;
+}
+
+.wpwa-remove-field-btn {
+    background: #fef2f2 !important;
+    border: 1px solid #fee2e2 !important;
+    color: #ef4444 !important;
+    padding: 6px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    width: 32px;
+    height: 32px;
+}
+
+.wpwa-remove-field-btn:hover {
+    background: #ef4444 !important;
+    color: #fff !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2) !important;
+}
+
+.wpwa-remove-field-btn .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.wpwa-filter-form select {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    min-width: 150px;
+    transition: all 0.2s ease;
+}
+
+.wpwa-filter-form select:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.1);
+}
+
+.wpwa-header-flex h1 {
+    font-weight: 800;
+    font-size: 28px;
+    margin: 0;
+    background: linear-gradient(135deg, #1d2327 0%, #464b50 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wpwa-date-now {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a7aaad;
+    background: #fff;
+    padding: 6px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Dashboard Hero - White Theme */
+.wpwa-hero-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.wpwa-hero-main {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    color: #111827;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+}
+
+.wpwa-hero-bg-accent {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    filter: blur(40px);
+    z-index: 1;
+}
+
+.wpwa-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.wpwa-badge {
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.wpwa-main-revenue {
+    font-size: 52px;
+    font-weight: 900;
+    margin: 0 0 15px;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: #111827;
+}
+
+.wpwa-trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.wpwa-trend-badge.up {
+    background: #059669;
+    color: #ecfdf5;
+}
+
+.wpwa-trend-badge.down {
+    background: #dc2626;
+    color: #fef2f2;
+}
+
+.wpwa-hero-mini {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 20px;
+    text-align: right;
+}
+
+.mini-item .m-label {
+    font-size: 12px;
+    color: #6b7280;
+    display: block;
+}
+
+.mini-item .m-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    display: block;
+}
+
+/* Status Cards */
+.wpwa-status-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 30px;
+    height: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+
+.wpwa-status-card h3 {
+    margin: 0 0 25px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.status-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.s-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.s-row.completed {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.s-row.pending {
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.s-row.failed {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.s-label {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.s-count {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* Grid Cards */
+.wpwa-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 25px;
+}
+
+.wpwa-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.card-title .dashicons {
+    font-size: 24px;
+    color: #3b82f6;
+    width: auto;
+    height: auto;
+}
+
+.card-title h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* CSS BAR CHART */
+.wpwa-css-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 200px;
+    padding: 0 10px;
+    margin-top: 20px;
+}
+
+.chart-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.chart-bar {
+    width: 35px;
+    background: linear-gradient(to top, #3b82f6 0%, #60a5fa 100%);
+    border-radius: 10px 10px 4px 4px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.chart-bar:hover {
+    background: linear-gradient(to top, #2563eb 0%, #3b82f6 100%);
+    transform: scaleX(1.1);
+}
+
+.bar-tooltip {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e3a8a;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.chart-bar:hover .bar-tooltip {
+    opacity: 1;
+}
+
+.chart-day {
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+/* Leaderboard */
+.top-products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.top-product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f9fafb;
+    border-radius: 16px;
+}
+
+.prod-rank {
+    width: 32px;
+    height: 32px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.prod-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.prod-name {
+    color: #111827;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.prod-name:hover {
+    color: #3b82f6;
+}
+
+.prod-sales {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.prod-amount {
+    font-weight: 800;
+    color: #111827;
+    font-size: 16px;
+}
+
+@media (max-width: 1100px) {
+
+    .wpwa-hero-grid,
+    .wpwa-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Product Gallery Metabox Styles */
+.wpwa-gallery-images {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    list-style: none !important;
+    padding: 0 !important;
+    gap: 10px !important;
+    margin: 15px 0 !important;
+    justify-content: flex-start !important;
+}
+
+.wpwa-gallery-images li {
+    position: relative !important;
+    background: #fff !important;
+    padding: 4px !important;
+    border-radius: 6px !important;
+    border: 1px solid #ccd0d4 !important;
+    margin: 0 !important;
+    line-height: 0 !important;
+}
+
+.wpwa-gallery-images li img {
+    display: block;
+    width: 68px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.wpwa-gallery-images li .delete {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #fff;
+}
+
+.wpwa-gallery-images li .delete:hover {
+    background: #dc2626;
+}
+
+.wpwa-gallery-images li .delete::before {
+    content: "×";
+}
+
+.wpwa-gallery-status {
+    margin: 10px 0;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+#wpwa-add-gallery-images {
+    width: 100%;
+    text-align: center;
+}
+
+.wpwa-char-count-wrap {
+    float: none;
+    font-weight: 700;
+    color: #2271b1;
+}
+
+.wpwa-char-count-wrap {
+    float: none !important;
+    clear: both !important;
+    display: inline-block !important;
+}
+
+
+
+.wpwa-excerpt-metabox {
+    display: flow-root !important;
+}
