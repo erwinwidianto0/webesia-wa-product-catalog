@@ -13,14 +13,14 @@ $has_sale = !empty( $sale_price ) && floatval( $sale_price ) > 0;
 $display_price = $has_sale ? $sale_price : $price;
 
 $min_order = get_post_meta( get_the_ID(), '_product_min_order', true ) ?: 1;
-$button_text = get_option( 'wpwa_button_text', 'Beli via WhatsApp' );
+$button_text = get_option( 'wpwa_button_text', esc_html__( 'Order via WhatsApp', 'webesia-wa-product-catalog' ) );
 ?>
 
 <div class="wpwa-product-card">
 	<div class="wpwa-product-image">
 		<a href="<?php echo esc_url( get_permalink() ); ?>">
 			<?php if ( $has_sale ) : ?>
-				<div class="wpwa-sale-badge"><?php esc_html_e( 'DISKON', 'webesia-wa-product-catalog' ); ?></div>
+				<div class="wpwa-sale-badge"><?php esc_html_e( 'SALE', 'webesia-wa-product-catalog' ); ?></div>
 			<?php endif; ?>
 			<?php if ( has_post_thumbnail() ) : ?>
 				<?php the_post_thumbnail( 'medium' ); ?>
@@ -54,7 +54,7 @@ $button_text = get_option( 'wpwa_button_text', 'Beli via WhatsApp' );
 		
 		<div class="wpwa-card-footer">
 			<a href="<?php echo esc_url( get_permalink() ); ?>" class="wpwa-more-link">
-				<?php esc_html_e( 'Selengkapnya', 'webesia-wa-product-catalog' ); ?> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+				<?php esc_html_e( 'View Details', 'webesia-wa-product-catalog' ); ?> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
 			</a>
 			<button class="wpwa-action-btn-wa wpwa-trigger-order" 
 			        data-id="<?php echo esc_attr( get_the_ID() ); ?>" 

@@ -11,7 +11,7 @@ add_action( 'wp_dashboard_setup', 'wpwa_add_dashboard_widgets' );
 function wpwa_add_dashboard_widgets() {
 	wp_add_dashboard_widget(
 		'webesia_product_catalog_dashboard_shortcut_widget',
-		esc_html__( 'Ringkasan Toko (WebEsia Product Catalog)', 'webesia-wa-product-catalog' ),
+		esc_html__( 'Store Summary (WA WebEsia Catalog)', 'webesia-wa-product-catalog' ),
 		'wpwa_dashboard_widget_render'
 	);
 }
@@ -34,44 +34,44 @@ function wpwa_dashboard_widget_render() {
 				<span class="dashicons dashicons-products"></span>
 				<div class="db-stat-info">
 					<span class="db-stat-value"><?php echo esc_html( number_format_i18n( $products_count ) ); ?></span>
-					<span class="db-stat-label"><?php esc_html_e( 'Total Produk', 'webesia-wa-product-catalog' ); ?></span>
+					<span class="db-stat-label"><?php esc_html_e( 'Total Products', 'webesia-wa-product-catalog' ); ?></span>
 				</div>
 			</div>
 			<div class="wpwa-db-stat-item">
 				<span class="dashicons dashicons-cart"></span>
 				<div class="db-stat-info">
 					<span class="db-stat-value"><?php echo esc_html( number_format_i18n( $stats['completed'] ) ); ?></span>
-					<span class="db-stat-label"><?php esc_html_e( 'Pesanan Selesai', 'webesia-wa-product-catalog' ); ?></span>
+					<span class="db-stat-label"><?php esc_html_e( 'Completed Orders', 'webesia-wa-product-catalog' ); ?></span>
 				</div>
 			</div>
 			<div class="wpwa-db-stat-item">
 				<span class="dashicons dashicons-chart-line"></span>
 				<div class="db-stat-info">
-					<span class="db-stat-value">Rp<?php echo esc_html( number_format( $stats['revenue'], 0, ',', '.' ) ); ?></span>
-					<span class="db-stat-label"><?php esc_html_e( 'Total Omzet', 'webesia-wa-product-catalog' ); ?></span>
+					<span class="db-stat-value"><?php echo wpwa_format_price( $stats['revenue'] ); ?></span>
+					<span class="db-stat-label"><?php esc_html_e( 'Total Revenue', 'webesia-wa-product-catalog' ); ?></span>
 				</div>
 			</div>
 		</div>
 
 		<!-- Shortcuts Grid -->
 		<div class="wpwa-db-shortcuts">
-			<h4><?php esc_html_e( 'Akses Cepat:', 'webesia-wa-product-catalog' ); ?></h4>
+			<h4><?php esc_html_e( 'Quick Access:', 'webesia-wa-product-catalog' ); ?></h4>
 			<div class="wpwa-db-links-grid">
 				<a href="<?php echo esc_url( admin_url('post-new.php?post_type=simple_product') ); ?>" class="wpwa-db-link">
 					<span class="dashicons dashicons-plus"></span>
-					<?php esc_html_e( 'Tambah Produk', 'webesia-wa-product-catalog' ); ?>
+					<?php esc_html_e( 'Add Product', 'webesia-wa-product-catalog' ); ?>
 				</a>
 				<a href="<?php echo esc_url( admin_url('edit.php?post_type=simple_product&page=wpwa-orders') ); ?>" class="wpwa-db-link">
 					<span class="dashicons dashicons-list-view"></span>
-					<?php esc_html_e( 'Daftar Pesanan', 'webesia-wa-product-catalog' ); ?>
+					<?php esc_html_e( 'Order List', 'webesia-wa-product-catalog' ); ?>
 				</a>
 				<a href="<?php echo esc_url( admin_url('edit.php?post_type=simple_product&page=wpwa-reports') ); ?>" class="wpwa-db-link">
 					<span class="dashicons dashicons-performance"></span>
-					<?php esc_html_e( 'Laporan', 'webesia-wa-product-catalog' ); ?>
+					<?php esc_html_e( 'Reports', 'webesia-wa-product-catalog' ); ?>
 				</a>
 				<a href="<?php echo esc_url( admin_url('edit.php?post_type=simple_product&page=wpwa-settings') ); ?>" class="wpwa-db-link">
 					<span class="dashicons dashicons-admin-generic"></span>
-					<?php esc_html_e( 'Pengaturan', 'webesia-wa-product-catalog' ); ?>
+					<?php esc_html_e( 'Settings', 'webesia-wa-product-catalog' ); ?>
 				</a>
 			</div>
 		</div>

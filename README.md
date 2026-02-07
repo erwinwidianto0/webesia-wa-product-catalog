@@ -1,4 +1,4 @@
-=== WebEsia Product Catalog ===
+=== WA WebEsia Catalog ===
 Contributors: erwinwidianto, WebEsia
 Tags: whatsapp, catalog, store, product, order
 Requires at least: 5.0
@@ -12,7 +12,7 @@ Professional product catalog with a direct WhatsApp order system. Full Free vers
 
 == Description ==
 
-**WebEsia Product Catalog** is a powerful, lightweight, and **100% Full Free** WordPress plugin designed to turn your website into a professional product catalog with a seamless chat ordering experience.
+**WA WebEsia Catalog** is a powerful, lightweight, and **100% Full Free** WordPress plugin designed to turn your website into a professional product catalog with a seamless chat ordering experience.
 
 Built for the Indonesian market and international small businesses, this plugin simplifies the sales process by sending order details directly to your WhatsApp number.
 

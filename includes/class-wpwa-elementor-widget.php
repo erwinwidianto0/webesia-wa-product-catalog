@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Elementor Widget for WebEsia Product Catalog
+ * Elementor Widget for WA WebEsia Catalog
  */
 class WPWA_Elementor_Product_Catalog extends \Elementor\Widget_Base {
 
@@ -13,7 +13,7 @@ class WPWA_Elementor_Product_Catalog extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'WebEsia Catalog', 'webesia-wa-product-catalog' );
+		return esc_html__( 'WA WebEsia Catalog', 'webesia-wa-product-catalog' );
 	}
 
 	public function get_icon() {
@@ -21,7 +21,7 @@ class WPWA_Elementor_Product_Catalog extends \Elementor\Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'general' ];
+		return [ 'webesia-wa-catalog' ];
 	}
 
 	protected function register_controls() {
@@ -43,6 +43,27 @@ class WPWA_Elementor_Product_Catalog extends \Elementor\Widget_Base {
 				'max' => 100,
 				'step' => 1,
 				'default' => 9,
+			]
+		);
+
+        $this->add_responsive_control(
+			'columns',
+			[
+				'label' => esc_html__( 'Columns', 'webesia-wa-product-catalog' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'options' => [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                ],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+                'desktop_default' => '3',
+                'tablet_default' => '2',
+                'mobile_default' => '1',
+                'default' => '3',
 			]
 		);
 
@@ -102,13 +123,14 @@ class WPWA_Elementor_Product_Catalog extends \Elementor\Widget_Base {
 		}
 
 		$shortcode = sprintf(
-			'[toko posts_per_page="%s" category="%s" filter="%s"]',
+			'[toko posts_per_page="%s" category="%s" filter="%s" columns="%s" columns_tablet="%s" columns_mobile="%s"]',
 			$limit,
 			esc_attr( $settings['category'] ),
-			'yes' === $settings['show_filter'] ? 'yes' : 'no'
+			'yes' === $settings['show_filter'] ? 'yes' : 'no',
+            $settings['columns'],
+            ! empty( $settings['columns_tablet'] ) ? $settings['columns_tablet'] : $settings['columns'],
+            ! empty( $settings['columns_mobile'] ) ? $settings['columns_mobile'] : ( ! empty( $settings['columns_tablet'] ) ? $settings['columns_tablet'] : $settings['columns'] )
 		);
-
-
 
 		echo do_shortcode( $shortcode );
 	}

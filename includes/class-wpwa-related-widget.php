@@ -12,7 +12,7 @@ class WPWA_Related_Products_Widget extends WP_Widget {
 		parent::__construct(
 			'wpwa_related_products',
 			esc_html__( 'WA Related Products', 'webesia-wa-product-catalog' ),
-			[ 'description' => esc_html__( 'Menampilkan produk terkait berdasarkan kategori produk yang sedang dilihat.', 'webesia-wa-product-catalog' ) ]
+			[ 'description' => esc_html__( 'Displays related products based on the current product category.', 'webesia-wa-product-catalog' ) ]
 		);
 	}
 
@@ -42,15 +42,15 @@ class WPWA_Related_Products_Widget extends WP_Widget {
 	}
 
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Produk Terkait', 'webesia-wa-product-catalog' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Related Products', 'webesia-wa-product-catalog' );
 		$limit = ! empty( $instance['limit'] ) ? absint( $instance['limit'] ) : 4;
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Judul:', 'webesia-wa-product-catalog' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'webesia-wa-product-catalog' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Jumlah Produk:', 'webesia-wa-product-catalog' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>"><?php esc_html_e( 'Number of Products:', 'webesia-wa-product-catalog' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'limit' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'limit' ) ); ?>" type="number" step="1" min="1" value="<?php echo esc_attr( $limit ); ?>">
 		</p>
 		<?php

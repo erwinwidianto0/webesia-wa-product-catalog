@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WebEsia Product Catalog Widget
+ * WA WebEsia Catalog Widget
  *
  * Adds a widget to display the product grid in sidebars or page builders that support legacy widgets.
  */
@@ -16,7 +16,7 @@ class WPWA_Product_Catalog_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'wpwa_product_catalog_widget', // Base ID
-			esc_html__( 'WebEsia Product Catalog', 'webesia-wa-product-catalog' ), // Name
+			esc_html__( 'WA WebEsia Catalog', 'webesia-wa-product-catalog' ), // Name
 			[
 				'description' => esc_html__( 'Displays your product catalog grid.', 'webesia-wa-product-catalog' ),
 			]

@@ -66,29 +66,69 @@ function wpwa_settings_page_html() {
 				}
 			}
 			update_option( 'wpwa_custom_form', $custom_fields );
+		} elseif ( $active_tab === 'language' ) {
+			if ( isset( $_POST['wpwa_plugin_language'] ) ) {
+				update_option( 'wpwa_plugin_language', sanitize_text_field( wp_unslash( $_POST['wpwa_plugin_language'] ) ) );
+			}
+			if ( isset( $_POST['wpwa_custom_translations'] ) && is_array( $_POST['wpwa_custom_translations'] ) ) {
+				$translations = [];
+				foreach ( $_POST['wpwa_custom_translations'] as $key => $value ) {
+					$translations[sanitize_text_field( wp_unslash( $key ) )] = sanitize_text_field( wp_unslash( $value ) );
+				}
+				update_option( 'wpwa_custom_translations', $translations );
+			}
 		}
 		
 		echo '<div class="updated"><p>' . esc_html__( 'Settings saved successfully.', 'webesia-wa-product-catalog' ) . '</p></div>';
 	}
 
 	if ( isset( $_GET['setup'] ) && 'done' === $_GET['setup'] ) {
-		echo '<div class="updated"><p>' . esc_html__( 'Auto-setup completed. "Toko" page has been verified/created.', 'webesia-wa-product-catalog' ) . '</p></div>';
+		echo '<div class="updated"><p>' . esc_html__( 'Auto-setup completed. "Shop" page has been verified/created.', 'webesia-wa-product-catalog' ) . '</p></div>';
+	}
+
+	// Transition "Silahkan isi form di bawah untuk memesan." to English if it's the current value
+	$current_welcome = get_option( 'wpwa_welcome_msg' );
+	if ( $current_welcome === 'Silahkan isi form di bawah untuk memesan.' ) {
+		update_option( 'wpwa_welcome_msg', 'Please fill out the form below to order.' );
+	}
+
+	// Transition labels
+	$custom_form = get_option( 'wpwa_custom_form' );
+	if ( is_array( $custom_form ) ) {
+		$updated = false;
+		foreach ( $custom_form as &$field ) {
+			if ( $field['label'] === 'Nama' ) { $field['label'] = 'Your Name'; $updated = true; }
+			if ( $field['label'] === 'Nomor WhatsApp' ) { $field['label'] = 'WhatsApp Number'; $updated = true; }
+			if ( $field['label'] === 'Alamat Pengiriman' ) { $field['label'] = 'Shipping Address'; $updated = true; }
+			if ( $field['label'] === 'Catatan' ) { $field['label'] = 'Note'; $updated = true; }
+			
+			// Placeholder migrations
+			if ( $field['placeholder'] === 'Nama Lengkap' ) { $field['placeholder'] = 'John Doe'; $updated = true; }
+			if ( $field['placeholder'] === 'Contoh: 08123456789' ) { $field['placeholder'] = '628xxxxxxxxxx'; $updated = true; }
+			if ( $field['placeholder'] === 'Nama Jalan, Kota, Kode Pos' ) { $field['placeholder'] = 'Street Name, City, Postal Code'; $updated = true; }
+			if ( $field['placeholder'] === 'Street Name, City, Postcode' ) { $field['placeholder'] = 'Street Name, City, Postal Code'; $updated = true; }
+			if ( $field['placeholder'] === 'Tanggal pengiriman, warna, dll.' ) { $field['placeholder'] = 'Delivery Date, Color, etc'; $updated = true; }
+			if ( $field['placeholder'] === 'Delivery date, color, etc.' ) { $field['placeholder'] = 'Delivery Date, Color, etc'; $updated = true; }
+		}
+		if ( $updated ) {
+			update_option( 'wpwa_custom_form', $custom_form );
+		}
 	}
 
 	$phone           = get_option( 'wpwa_phone', '' );
 	$button_text     = get_option( 'wpwa_button_text', esc_html__( 'Order via WhatsApp', 'webesia-wa-product-catalog' ) );
-	$template        = get_option( 'wpwa_message_template', __( "Halo Admin, saya ingin pesan \"{product_name}\" dengan URL \"{product_url}\":\n\nJumlah: {qty}\nTotal: {total}\nNama: {customer_name}\nNomor HP: {customer_phone}\nAlamat: {address}\nCatatan: {note}\n\nTerimakasih.", 'webesia-wa-product-catalog' ) );
-	$welcome_msg     = get_option( 'wpwa_welcome_msg', esc_html__( 'Silahkan isi form di bawah untuk memesan.', 'webesia-wa-product-catalog' ) );
+	$template        = get_option( 'wpwa_message_template', __( "Hello Admin, I would like to order \"{product_name}\" from your website \"{product_url}\":\n\nQuantity: {qty}\nTotal: {total}\nName: {customer_name}\nPhone: {customer_phone}\nAddress: {address}\nNote: {note}\n\nThank you.", 'webesia-wa-product-catalog' ) );
+	$welcome_msg     = get_option( 'wpwa_welcome_msg', esc_html__( 'Please fill out the form below to order.', 'webesia-wa-product-catalog' ) );
 	$shop_page_id    = get_option( 'wpwa_shop_page_id', 0 );
-	$product_slug    = get_option( 'wpwa_product_slug', 'produk' ); 
-	$catalog_slug    = get_option( 'wpwa_catalog_slug', 'toko' );   
+	$product_slug    = get_option( 'wpwa_product_slug', 'product' ); 
+	$catalog_slug    = get_option( 'wpwa_catalog_slug', 'shop' );   
 
 	// Default Form Configuration
 	$default_form = [
-		['id' => 'customer_name',    'label' => 'Nama Anda',         'type' => 'text',     'placeholder' => 'Budi Santoso', 'required' => true, 'enabled' => true],
-		['id' => 'customer_phone',   'label' => 'Nomor WhatsApp',    'type' => 'text',     'placeholder' => '08xxxxxxxxxx', 'required' => true, 'enabled' => true],
-		['id' => 'customer_address', 'label' => 'Alamat Pengiriman', 'type' => 'textarea', 'placeholder' => 'Nama Jalan, Kota, Kode Pos', 'required' => true, 'enabled' => true],
-		['id' => 'customer_note',    'label' => 'Catatan',           'type' => 'textarea', 'placeholder' => 'Tanggal pengiriman, warna, dll.', 'required' => false, 'enabled' => true],
+		['id' => 'customer_name',    'label' => 'Your Name',         'type' => 'text',     'placeholder' => 'John Doe', 'required' => true, 'enabled' => true],
+		['id' => 'customer_phone',   'label' => 'WhatsApp Number',    'type' => 'text',     'placeholder' => '628xxxxxxxxxx', 'required' => true, 'enabled' => true],
+		['id' => 'customer_address', 'label' => 'Shipping Address', 'type' => 'textarea', 'placeholder' => 'Street Name, City, Postal Code', 'required' => true, 'enabled' => true],
+		['id' => 'customer_note',    'label' => 'Note',           'type' => 'textarea', 'placeholder' => 'Delivery Date, Color, etc', 'required' => false, 'enabled' => true],
 	];
 	$custom_form = get_option( 'wpwa_custom_form', $default_form );
 
@@ -98,9 +138,9 @@ function wpwa_settings_page_html() {
 		<hr class="wp-header-end">
 
 		<h2 class="nav-tab-wrapper">
-			<a href="?post_type=simple_product&page=wpwa-settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Umum', 'webesia-wa-product-catalog' ); ?></a>
-			<a href="?post_type=simple_product&page=wpwa-settings&tab=form" class="nav-tab <?php echo $active_tab == 'form' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Formulir Order', 'webesia-wa-product-catalog' ); ?></a>
-			<a href="?post_type=simple_product&page=wpwa-settings&tab=language" class="nav-tab <?php echo $active_tab == 'language' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Bahasa', 'webesia-wa-product-catalog' ); ?></a>
+			<a href="?post_type=simple_product&page=wpwa-settings&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'General', 'webesia-wa-product-catalog' ); ?></a>
+			<a href="?post_type=simple_product&page=wpwa-settings&tab=form" class="nav-tab <?php echo $active_tab == 'form' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Order Form', 'webesia-wa-product-catalog' ); ?></a>
+			<a href="?post_type=simple_product&page=wpwa-settings&tab=language" class="nav-tab <?php echo $active_tab == 'language' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Language', 'webesia-wa-product-catalog' ); ?></a>
 		</h2>
 
 		<form method="post" action="" style="background: #fff; padding: 20px; border: 1px solid #ccd0d4; border-top: none; max-width: 1000px;">
@@ -142,13 +182,13 @@ function wpwa_settings_page_html() {
 					<td>
 						<input type="text" name="wpwa_catalog_slug" id="wpwa_catalog_slug" value="<?php echo esc_attr( $catalog_slug ); ?>" class="regular-text">
 						<?php /* translators: %s: default slug value */ ?>
-						<p class="description"><?php printf( esc_html__( 'Default: %s. (Example: domain.com/toko/)', 'webesia-wa-product-catalog' ), '<code>toko</code>' ); ?></p>
+						<p class="description"><?php printf( esc_html__( 'Default: %s. (Example: domain.com/shop/)', 'webesia-wa-product-catalog' ), '<code>shop</code>' ); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th><label for="wpwa_currency"><?php esc_html_e( 'Currency Symbol (e.g. Rp, USD)', 'webesia-wa-product-catalog' ); ?></label></th>
 					<td>
-						<input type="text" name="wpwa_currency" id="wpwa_currency" value="<?php echo esc_attr( get_option( 'wpwa_currency', 'Rp' ) ); ?>" class="regular-text">
+						<input type="text" name="wpwa_currency" id="wpwa_currency" value="<?php echo esc_attr( get_option( 'wpwa_currency', '$' ) ); ?>" class="regular-text">
 						<p class="description"><?php esc_html_e( 'Enter your desired currency symbol or code.', 'webesia-wa-product-catalog' ); ?></p>
 					</td>
 				</tr>
@@ -176,37 +216,91 @@ function wpwa_settings_page_html() {
 			<?php endif; ?>
 
 			<?php if ( 'language' === $active_tab ) : ?>
+			<?php 
+			$plugin_lang = get_option( 'wpwa_plugin_language', 'en' );
+			$custom_translations = get_option( 'wpwa_custom_translations', [] );
+			$core_maps = wpwa_get_translation_maps();
+			?>
 			<table class="form-table">
 				<tr>
-					<th><?php esc_html_e( 'Language Updates', 'webesia-wa-product-catalog' ); ?></th>
+					<th><label for="wpwa_plugin_language"><?php esc_html_e( 'Plugin Language', 'webesia-wa-product-catalog' ); ?></label></th>
 					<td>
-						<div id="wpwa-translation-status">
-							<p><span class="dashicons dashicons-translation" style="margin-right: 5px; color: #555;"></span> <strong><?php esc_html_e( 'Current Language:', 'webesia-wa-product-catalog' ); ?></strong> <?php echo esc_html( get_locale() ); ?></p>
-							<p class="description"><?php esc_html_e( 'Translations are handled automatically for Indonesian. For other languages, use Loco Translate.', 'webesia-wa-product-catalog' ); ?></p>
-							<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=simple_product&page=wpwa-settings&tab=language&wpwa_update_lang=1' ) ); ?>" class="button button-small" id="wpwa-btn-update-lang"><?php esc_html_e( 'Cek Pembaruan Bahasa', 'webesia-wa-product-catalog' ); ?></a>
-						</div>
-						<?php 
-						if ( isset( $_GET['wpwa_update_lang'] ) ) {
-							echo '<div style="margin-top: 10px; padding: 10px; background: #fdfdfd; border-left: 4px solid #46b450; font-size: 13px;">✓ ' . esc_html__( 'Semua bahasa sudah versi terbaru.', 'webesia-wa-product-catalog' ) . '</div>';
-						}
-						?>
+						<select name="wpwa_plugin_language" id="wpwa_plugin_language" class="regular-text">
+							<option value="en" <?php selected( $plugin_lang, 'en' ); ?>><?php esc_html_e( 'English (Default)', 'webesia-wa-product-catalog' ); ?></option>
+							<option value="id" <?php selected( $plugin_lang, 'id' ); ?>><?php esc_html_e( 'Bahasa Indonesia (Bundled)', 'webesia-wa-product-catalog' ); ?></option>
+							<option value="custom" <?php selected( $plugin_lang, 'custom' ); ?>><?php esc_html_e( 'Custom Translate', 'webesia-wa-product-catalog' ); ?></option>
+						</select>
+						<p class="description"><?php esc_html_e( 'Choose the primary language for your catalog.', 'webesia-wa-product-catalog' ); ?></p>
 					</td>
 				</tr>
 			</table>
+
+			<div id="wpwa-custom-translate-section" style="<?php echo $plugin_lang === 'custom' ? '' : 'display: none;'; ?> margin-top: 30px;">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+					<h3 style="margin: 0;"><?php esc_html_e( 'Custom Translations', 'webesia-wa-product-catalog' ); ?></h3>
+					<input type="text" id="wpwa-translation-search" placeholder="<?php esc_attr_e( 'Search keywords...', 'webesia-wa-product-catalog' ); ?>" class="regular-text" style="width: 300px;">
+				</div>
+				<p class="description" style="margin-bottom: 15px;"><?php esc_html_e( 'Translate or modify any string below. Leave empty to use the original English text.', 'webesia-wa-product-catalog' ); ?></p>
+				
+				<div style="max-height: 500px; overflow-y: auto; border: 1px solid #ccd0d4;">
+					<table class="widefat striped">
+						<thead>
+							<tr>
+								<th style="width: 45%;"><?php esc_html_e( 'Original String (English)', 'webesia-wa-product-catalog' ); ?></th>
+								<th><?php esc_html_e( 'Your Translation', 'webesia-wa-product-catalog' ); ?></th>
+							</tr>
+						</thead>
+						<tbody id="wpwa-translation-table-body">
+							<?php foreach ( $core_maps as $original => $indonesian ) : ?>
+							<tr class="wpwa-translation-row">
+								<td class="wpwa-original-text"><strong><?php echo esc_html( $original ); ?></strong></td>
+								<td>
+									<input type="text" name="wpwa_custom_translations[<?php echo esc_attr( $original ); ?>]" 
+										   value="<?php echo esc_attr( isset( $custom_translations[$original] ) ? $custom_translations[$original] : '' ); ?>" 
+										   placeholder="<?php echo esc_attr( $indonesian ); ?>" 
+										   class="widefat">
+								</td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<script>
+			jQuery(document).ready(function($) {
+				// Toggle custom section
+				$('#wpwa_plugin_language').on('change', function() {
+					if ($(this).val() === 'custom') {
+						$('#wpwa-custom-translate-section').slideDown();
+					} else {
+						$('#wpwa-custom-translate-section').slideUp();
+					}
+				});
+
+				// Search logic
+				$('#wpwa-translation-search').on('keyup', function() {
+					const value = $(this).val().toLowerCase();
+					$('.wpwa-translation-row').filter(function() {
+						$(this).toggle($(this).find('.wpwa-original-text').text().toLowerCase().indexOf(value) > -1);
+					});
+				});
+			});
+			</script>
 			<?php endif; ?>
 
 			<?php if ( 'form' === $active_tab ) : ?>
 			<div class="wpwa-form-builder">
-				<p class="description" style="margin-bottom: 20px;"><?php esc_html_e( 'Aktifkan, ubah label, atau atur field wajib untuk formulir order WhatsApp. Bapak juga bisa menambah field baru sesuai kebutuhan.', 'webesia-wa-product-catalog' ); ?></p>
+				<p class="description" style="margin-bottom: 20px;"><?php esc_html_e( 'Enable, change labels, or set required fields for the WhatsApp order form. You can also add new fields as needed.', 'webesia-wa-product-catalog' ); ?></p>
 				<table class="widefat striped wpwa-fields-table" style="margin-bottom: 20px;">
 					<thead>
 						<tr>
-							<th style="width: 50px; text-align: center;"><?php esc_html_e( 'Aktif', 'webesia-wa-product-catalog' ); ?></th>
-							<th><?php esc_html_e( 'ID Field', 'webesia-wa-product-catalog' ); ?></th>
+							<th style="width: 50px; text-align: center;"><?php esc_html_e( 'Active', 'webesia-wa-product-catalog' ); ?></th>
+							<th><?php esc_html_e( 'Field ID', 'webesia-wa-product-catalog' ); ?></th>
 							<th><?php esc_html_e( 'Label', 'webesia-wa-product-catalog' ); ?></th>
 							<th><?php esc_html_e( 'Placeholder', 'webesia-wa-product-catalog' ); ?></th>
-							<th><?php esc_html_e( 'Tipe', 'webesia-wa-product-catalog' ); ?></th>
-							<th style="width: 50px; text-align: center;"><?php esc_html_e( 'Wajib', 'webesia-wa-product-catalog' ); ?></th>
+							<th><?php esc_html_e( 'Type', 'webesia-wa-product-catalog' ); ?></th>
+							<th style="width: 50px; text-align: center;"><?php esc_html_e( 'Required', 'webesia-wa-product-catalog' ); ?></th>
 							<th style="width: 50px; text-align: center;"></th>
 						</tr>
 					</thead>
@@ -236,7 +330,7 @@ function wpwa_settings_page_html() {
 							</td>
 							<td style="text-align: center; vertical-align: middle;">
 								<?php if ( !in_array($field['id'], ['customer_name', 'customer_phone', 'customer_address', 'customer_note']) ) : ?>
-									<button type="button" class="wpwa-remove-field-btn" title="<?php esc_attr_e('Hapus', 'webesia-wa-product-catalog'); ?>">
+									<button type="button" class="wpwa-remove-field-btn" title="<?php esc_attr_e('Delete', 'webesia-wa-product-catalog'); ?>">
 										<span class="dashicons dashicons-trash"></span>
 									</button>
 								<?php endif; ?>
@@ -246,12 +340,12 @@ function wpwa_settings_page_html() {
 					</tbody>
 				</table>
 				<button type="button" id="wpwa-add-field" class="button button-secondary">
-					<span class="dashicons dashicons-plus-alt" style="margin-top: 4px;"></span> <?php esc_html_e( 'Tambah Field Baru', 'webesia-wa-product-catalog' ); ?>
+					<span class="dashicons dashicons-plus-alt" style="margin-top: 4px;"></span> <?php esc_html_e( 'Add New Field', 'webesia-wa-product-catalog' ); ?>
 				</button>
 				<p class="description" style="margin-top: 20px;">
 					<?php 
 					/* translators: %1$s: Note label, %2$s: {details} tag */ 
-					printf( esc_html__( '%1$s Tag %2$s di template pesan WhatsApp akan otomatis menampilkan semua field di atas. Field default (ID: customer_*) tidak bisa dihapus ID-nya tapi bisa di-nonaktifkan.', 'webesia-wa-product-catalog' ), '<strong>' . esc_html__( 'Catatan:', 'webesia-wa-product-catalog' ) . '</strong>', '<code>{details}</code>' ); ?>
+					printf( esc_html__( '%1$s The %2$s tag in the WhatsApp message template will automatically display all the fields above. Default fields (ID: customer_*) cannot have their IDs deleted but can be disabled.', 'webesia-wa-product-catalog' ), '<strong>' . esc_html__( 'Note:', 'webesia-wa-product-catalog' ) . '</strong>', '<code>{details}</code>' ); ?>
 				</p>
 			</div>
 
@@ -269,10 +363,10 @@ function wpwa_settings_page_html() {
 							<input type="text" name="form_fields[${fieldIndex}][id]" value="field_${fieldIndex}" class="code" style="width: 100%;">
 						</td>
 						<td>
-							<input type="text" name="form_fields[${fieldIndex}][label]" value="Label Baru" class="regular-text" style="width: 100%;">
+							<input type="text" name="form_fields[${fieldIndex}][label]" value="New Label" class="regular-text" style="width: 100%;">
 						</td>
 						<td>
-							<input type="text" name="form_fields[${fieldIndex}][placeholder]" value="Contoh..." class="regular-text" style="width: 100%;">
+							<input type="text" name="form_fields[${fieldIndex}][placeholder]" value="Example..." class="regular-text" style="width: 100%;">
 						</td>
 						<td>
 							<select name="form_fields[${fieldIndex}][type]" style="width: 100%;">
@@ -284,7 +378,7 @@ function wpwa_settings_page_html() {
 							<input type="checkbox" name="form_fields[${fieldIndex}][required]" value="1">
 						</td>
 						<td style="text-align: center; vertical-align: middle;">
-							<button type="button" class="wpwa-remove-field-btn" title="<?php esc_attr_e('Hapus', 'webesia-wa-product-catalog'); ?>">
+							<button type="button" class="wpwa-remove-field-btn" title="<?php esc_attr_e('Delete', 'webesia-wa-product-catalog'); ?>">
 								<span class="dashicons dashicons-trash"></span>
 							</button>
 						</td>
@@ -294,7 +388,7 @@ function wpwa_settings_page_html() {
 				});
 
 				$(document).on('click', '.wpwa-remove-field-btn', function() {
-					if (confirm('<?php echo esc_js( esc_html__( 'Hapus field ini?', 'webesia-wa-product-catalog' ) ); ?>')) {
+					if (confirm('<?php echo esc_js( esc_html__( 'Delete this field?', 'webesia-wa-product-catalog' ) ); ?>')) {
 						$(this).closest('tr').remove();
 					}
 				});
@@ -305,7 +399,7 @@ function wpwa_settings_page_html() {
 			<p class="submit">
 				<input type="submit" name="wpwa_save_settings" class="button-primary" value="<?php esc_attr_e( 'Save Settings', 'webesia-wa-product-catalog' ); ?>">
 				<?php if ( 'general' === $active_tab ) : ?>
-				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=simple_product&page=wpwa-settings&wpwa_run_setup=1' ) ); ?>" class="button-secondary" style="margin-left: 10px;"><?php esc_html_e( 'Run Auto-Setup (Toko Page)', 'webesia-wa-product-catalog' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=simple_product&page=wpwa-settings&wpwa_run_setup=1' ) ); ?>" class="button-secondary" style="margin-left: 10px;"><?php esc_html_e( 'Run Auto-Setup (Shop Page)', 'webesia-wa-product-catalog' ); ?></a>
 				<?php endif; ?>
 			</p>
 		</form>

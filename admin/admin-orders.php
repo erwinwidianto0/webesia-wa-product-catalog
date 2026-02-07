@@ -20,6 +20,7 @@ class WPWA_Order_List_Table extends WP_List_Table {
 
 	public function get_columns() {
 		return [
+			'cb'              => '<input type="checkbox" />',
 			'order_number'    => esc_html__( 'Order #', 'webesia-wa-product-catalog' ),
 			'customer_name'   => esc_html__( 'Customer', 'webesia-wa-product-catalog' ),
 			'product_name'    => esc_html__( 'Product', 'webesia-wa-product-catalog' ),
@@ -29,6 +30,21 @@ class WPWA_Order_List_Table extends WP_List_Table {
 			'status'          => esc_html__( 'Status', 'webesia-wa-product-catalog' ),
 			'created_at'      => esc_html__( 'Date', 'webesia-wa-product-catalog' ),
 			'actions'         => esc_html__( 'Actions', 'webesia-wa-product-catalog' )
+		];
+	}
+
+	public function column_cb( $item ) {
+		return sprintf(
+			'<input type="checkbox" name="order_ids[]" value="%s" />',
+			$item->id
+		);
+	}
+
+	public function get_bulk_actions() {
+		return [
+			'bulk-delete'    => esc_html__( 'Delete', 'webesia-wa-product-catalog' ),
+			'bulk-complete'  => esc_html__( 'Mark as Completed', 'webesia-wa-product-catalog' ),
+			'bulk-fail'      => esc_html__( 'Mark as Failed', 'webesia-wa-product-catalog' ),
 		];
 	}
 
@@ -74,7 +90,7 @@ class WPWA_Order_List_Table extends WP_List_Table {
 			case 'customer_note':
 				return '<small><i>' . esc_html( $item->customer_note ) . '</i></small>';
 			case 'total_amount':
-				return 'Rp' . number_format( $item->total_amount, 0, ',', '.' );
+				return wpwa_format_currency( $item->total_amount );
 			case 'status':
 				$status_labels = [
 					'pending'   => esc_html__( 'Pending', 'webesia-wa-product-catalog' ),
@@ -160,11 +176,37 @@ function wpwa_orders_page_html() {
 		echo '<div class="updated"><p>' . esc_html__( 'Order updated.', 'webesia-wa-product-catalog' ) . '</p></div>';
 	}
 
+	// Handle Bulk Actions
+	$action = ( isset( $_POST['action'] ) && $_POST['action'] !== '-1' ) ? sanitize_text_field( $_POST['action'] ) : ( ( isset( $_POST['action2'] ) && $_POST['action2'] !== '-1' ) ? sanitize_text_field( $_POST['action2'] ) : '' );
+	
+	if ( $action && isset( $_POST['order_ids'] ) && is_array( $_POST['order_ids'] ) ) {
+		$order_ids = array_map( 'intval', $_POST['order_ids'] );
+		$count = 0;
+
+		foreach ( $order_ids as $id ) {
+			if ( 'bulk-delete' === $action ) {
+				$wpdb->delete( "{$wpdb->prefix}wa_orders", [ 'id' => $id ] );
+				$wpdb->delete( "{$wpdb->prefix}wa_order_items", [ 'order_id' => $id ] );
+				$count++;
+			} elseif ( 'bulk-complete' === $action ) {
+				$wpdb->update( "{$wpdb->prefix}wa_orders", [ 'status' => 'completed' ], [ 'id' => $id ] );
+				$count++;
+			} elseif ( 'bulk-fail' === $action ) {
+				$wpdb->update( "{$wpdb->prefix}wa_orders", [ 'status' => 'failed' ], [ 'id' => $id ] );
+				$count++;
+			}
+		}
+
+		if ( $count > 0 ) {
+			echo '<div class="updated"><p>' . sprintf( _n( '%d order updated.', '%d orders updated.', $count, 'webesia-wa-product-catalog' ), $count ) . '</p></div>';
+		}
+	}
+
 	$table = new WPWA_Order_List_Table();
 	$table->prepare_items();
 	?>
-	<div class="wrap wpwa-admin-wrap">
-		<h1 class="wp-heading-inline"><?php esc_html_e( 'Orders via WhatsApp', 'webesia-wa-product-catalog' ); ?></h1>
+	<div class="wrap">
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Order List', 'webesia-wa-product-catalog' ); ?></h1>
 		<hr class="wp-header-end">
 
 		<div class="wpwa-order-list-container">

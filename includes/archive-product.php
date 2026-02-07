@@ -51,35 +51,32 @@ get_header(); ?>
 						?>
 					</div>
 					
-					<div class="wpwa-pagination">
-						<?php
-						global $wp_query;
-						$pagination = paginate_links( [
-							'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-							'format'    => '?paged=%#%',
-							'current'   => max( 1, get_query_var( 'paged' ) ),
-							'total'     => $wp_query->max_num_pages,
-							'prev_text' => esc_html__( '« Sebelumnya', 'webesia-wa-product-catalog' ),
-							'next_text' => esc_html__( 'Selanjutnya »', 'webesia-wa-product-catalog' ),
-							'type'      => 'list',
-						] );
+					<?php
+					global $wp_query;
+					if ( $wp_query->max_num_pages > 1 ) : ?>
+						<div class="wpwa-pagination">
+							<?php
+							$pagination = paginate_links( [
+								'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+								'format'    => '?paged=%#%',
+								'current'   => max( 1, get_query_var( 'paged' ) ),
+								'total'     => $wp_query->max_num_pages,
+								'prev_text' => esc_html__( '« Previous', 'webesia-wa-product-catalog' ),
+								'next_text' => esc_html__( 'Next »', 'webesia-wa-product-catalog' ),
+								'type'      => 'list',
+							] );
 
-						if ( $pagination ) {
-							echo $pagination;
-						} else {
-							// Force display for single page
-							echo '<ul class="page-numbers">';
-							echo '<li><span aria-current="page" class="page-numbers current">1</span></li>';
-							echo '<li><span class="page-numbers next disabled" style="opacity:0.5; cursor:not-allowed;">' . esc_html__( 'Selanjutnya »', 'webesia-wa-product-catalog' ) . '</span></li>'; 
-							echo '</ul>';
-						}
-						?>
-					</div>
+							if ( $pagination ) {
+								echo $pagination;
+							}
+							?>
+						</div>
+					<?php endif; ?>
 
 				<?php else : ?>
 					<div class="wpwa-no-products">
 						<p><?php esc_html_e( 'No products found with those criteria.', 'webesia-wa-product-catalog' ); ?></p>
-						<a href="<?php echo esc_url( get_permalink( $shop_page_id ) ); ?>" class="btn-reset"><?php esc_html_e( 'Reset Filter', 'webesia-wa-product-catalog' ); ?></a>
+						<a href="<?php echo esc_url( get_permalink( $shop_page_id ) ); ?>" class="btn-reset"><?php esc_html_e( 'Reset Filters', 'webesia-wa-product-catalog' ); ?></a>
 					</div>
 				<?php endif; ?>
 			</div>

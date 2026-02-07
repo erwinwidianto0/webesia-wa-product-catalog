@@ -14,6 +14,195 @@
     --wpwa-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* Breadcrumb Styling */
+.wpwa-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.wpwa-breadcrumb a {
+    text-decoration: none;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.wpwa-breadcrumb a:hover {
+    color: #25d366;
+}
+
+.wpwa-breadcrumb-separator {
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.wpwa-breadcrumb-current {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Product Meta Styling */
+.wpwa-product-meta-wrapper {
+    margin-top: 15px;
+}
+
+.wpwa-product-meta-item {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #64748b;
+}
+
+.wpwa-meta-label {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.wpwa-meta-value {
+    color: #64748b;
+}
+
+.wpwa-meta-value a {
+    text-decoration: none;
+    color: #64748b;
+    transition: color 0.15s;
+}
+
+.wpwa-meta-value a:hover {
+    color: #25d366;
+}
+
+/* Pricing Widget Styling */
+.wpwa-pricing-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.wpwa-price-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #128c7e;
+}
+
+.wpwa-price-regular {
+    font-size: 18px;
+    color: #94a3b8;
+}
+
+.wpwa-price-regular.strikethrough {
+    text-decoration: line-through;
+}
+
+/* Short Description Widget Styling */
+.wpwa-product-excerpt {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+/* CTA Widget Styling */
+.wpwa-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #334155;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    width: 100%;
+}
+
+.wpwa-cta-btn:hover {
+    background-color: #1e293b;
+    transform: translateY(-2px);
+}
+
+.wpwa-cta-btn svg {
+    flex-shrink: 0;
+}
+
+/* Product Tabs Widget Styling */
+.wpwa-product-tabs {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.wpwa-tab-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.wpwa-tab-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.wpwa-tab-nav-item {
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #64748b;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.wpwa-tab-nav-item:hover {
+    color: #1e293b;
+}
+
+.wpwa-tab-nav-item.active {
+    color: #22c55e;
+    border-bottom-color: #22c55e;
+}
+
+.wpwa-tab-content {
+    padding: 30px 0;
+    min-height: 100px;
+}
+
+.wpwa-tab-pane {
+    display: none;
+    animation: wpwaFadeIn 0.3s ease;
+    line-height: 1.7;
+    color: #475569;
+}
+
+.wpwa-tab-pane.active {
+    display: block;
+}
+
+@keyframes wpwaFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Global Button Refinement */
 /* Catalog Layout & Sidebar Overhaul */
 .wpwa-catalog-layout {
@@ -140,17 +329,23 @@
     width: 100%;
 }
 
-/* Product Grid - Force 3 Columns on Desktop with Tighter Gap */
+/* Product Grid - Dynamic Columns via CSS Variables */
 .wpwa-product-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(var(--wpwa-columns, 3), 1fr) !important;
     gap: 16px !important;
 }
 
 @media (max-width: 991px) {
     .wpwa-product-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(var(--wpwa-columns-tablet, 2), 1fr) !important;
         gap: 12px !important;
+    }
+
+    @media (max-width: 767px) {
+        .wpwa-product-grid {
+            grid-template-columns: repeat(var(--wpwa-columns-mobile, 1), 1fr) !important;
+        }
     }
 
     .wpwa-product-info {
@@ -738,14 +933,7 @@
     display: none;
 }
 
-/* Product Grid Shortcode */
-.wpwa-product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    margin: 30px 0;
-}
-
+/* Product Grid Shortcode (Redundant - handled by dynamic grid at line 333) */
 .wpwa-product-card {
     background: var(--wpwa-white);
     border-radius: var(--wpwa-radius);

@@ -60,7 +60,7 @@ function wpwa_handle_ajax_order() {
 
 	$order_id = $wpdb->insert_id;
 	if ( ! $order_id ) {
-		wp_send_json_error( esc_html__( 'Gagal menyimpan pesanan ke database.', 'webesia-wa-product-catalog' ) );
+		wp_send_json_error( esc_html__( 'Failed to save order to database.', 'webesia-wa-product-catalog' ) );
 	}
 
 	$wpdb->insert( $table_items, [
@@ -79,7 +79,7 @@ function wpwa_handle_ajax_order() {
 	}
 	
 	// Force the new template format requested by the user
-	$default_template = "Halo Admin, saya ingin pesan \"{product_name}\" dengan URL \"{product_url}\":\n\nJumlah: {qty}\nTotal: {total}\nNama: {customer_name}\nNomor HP: {customer_phone}\nAlamat: {address}\nCatatan: {note}\n\nTerimakasih.";
+	$default_template = __( "Hello Admin, I would like to order \"{product_name}\" with URL \"{product_url}\":\n\nQuantity: {qty}\nTotal: {total}\nName: {customer_name}\nPhone: {customer_phone}\nAddress: {address}\nNote: {note}\n\nThank you.", 'webesia-wa-product-catalog' );
 	$template = get_option( 'wpwa_message_template', $default_template );
 	
 	// If the template is still using the old style (no product_url), force update it to the new style
@@ -108,13 +108,13 @@ function wpwa_handle_ajax_order() {
 
 	$message = str_replace(
 		[ '{product_name}', '{product_url}', '{qty}', '{total}', '{customer_name}', '{customer_phone}', '{address}', '{note}', '{order_number}', '{details}' ],
-		[ $product_name, $product_url, $qty, 'Rp' . number_format( $total, 0, ',', '.' ), $name, $phone, $address, $note, $order_number, $order_details ],
+		[ $product_name, $product_url, $qty, wpwa_format_price( $total ), $name, $phone, $address, $note, $order_number, $order_details ],
 		$template
 	);
 
 	// If {details} tag is not used but they added custom fields, append them if not already there
 	if ( strpos( $template, '{details}' ) === false && count($fields) > 4 ) {
-		$message .= "\n\nDetail Tambahan:" . $order_details;
+		$message .= "\n\n" . __( "Additional Details:", 'webesia-wa-product-catalog' ) . $order_details;
 	}
 
 	$wa_url = "https://wa.me/" . preg_replace( '/[^0-9]/', '', $wa_phone ) . "?text=" . urlencode( $message );

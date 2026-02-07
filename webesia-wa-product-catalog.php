@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: WebEsia Product Catalog
- * Project-Id-Version: WebEsia Product Catalog 1.0.0
+ * Plugin Name: WA WebEsia Catalog
+ * Project-Id-Version: WA WebEsia Catalog 1.0.0
  * Description: Catalog products with a seamless chat order system. Developed by Erwin Widianto (WebEsia).
  * Version: 1.0.0
  * Author: WebEsia
@@ -36,6 +36,7 @@ require_once WPWA_PATH . 'includes/review-functions.php';
 require_once WPWA_PATH . 'includes/i18n.php';
 require_once WPWA_PATH . 'includes/ajax-handler.php';
 require_once WPWA_PATH . 'includes/shortcode.php';
+require_once WPWA_PATH . 'includes/template-tags.php';
 require_once WPWA_PATH . 'admin/admin-settings.php';
 require_once WPWA_PATH . 'admin/admin-orders.php';
 require_once WPWA_PATH . 'admin/admin-reports.php';
@@ -44,7 +45,6 @@ require_once WPWA_PATH . 'includes/class-wpwa-widget.php';
 require_once WPWA_PATH . 'includes/class-wpwa-related-widget.php';
 require_once WPWA_PATH . 'includes/blocks.php';
 require_once WPWA_PATH . 'includes/related-blocks.php';
-require_once WPWA_PATH . 'includes/template-tags.php';
 
 // Register Widget
 add_action( 'widgets_init', function() {
@@ -52,14 +52,39 @@ add_action( 'widgets_init', function() {
 	register_widget( 'WPWA_Related_Products_Widget' );
 } );
 
-// Register Elementor Widget
+// Register Elementor Widget Category
+add_action( 'elementor/elements/categories_registered', function( $elements_manager ) {
+	$elements_manager->add_category(
+		'webesia-wa-catalog',
+		[
+			'title' => esc_html__( 'WA WebEsia Catalog', 'webesia-wa-product-catalog' ),
+			'icon'  => 'fa fa-shopping-cart',
+		]
+	);
+} );
+
+// Register Elementor Widgets
 add_action( 'elementor/widgets/register', function( $widgets_manager ) {
 	require_once WPWA_PATH . 'includes/class-wpwa-elementor-widget.php';
 	require_once WPWA_PATH . 'includes/class-wpwa-elementor-related-widget.php';
 	require_once WPWA_PATH . 'includes/class-wpwa-elementor-gallery-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-title-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-breadcrumb-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-meta-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-pricing-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-excerpt-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-cta-widget.php';
+	require_once WPWA_PATH . 'includes/class-wpwa-elementor-tabs-widget.php';
 	$widgets_manager->register( new \WPWA_Elementor_Product_Catalog() );
 	$widgets_manager->register( new \WPWA_Elementor_Related_Products() );
 	$widgets_manager->register( new \WPWA_Elementor_Product_Gallery() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_Title() );
+	$widgets_manager->register( new \WPWA_Elementor_Breadcrumb() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_Meta() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_Pricing() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_Excerpt() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_CTA() );
+	$widgets_manager->register( new \WPWA_Elementor_Product_Tabs() );
 } );
 
 // Activation Hook
@@ -104,7 +129,7 @@ function wpwa_auto_generate_pages() {
 		'meta_key'    => '_wp_page_template',
 		'hierarchical' => 0,
 		'number'      => 1,
-		'post_name__in' => [ 'toko', 'product-catalog' ]
+		'post_name__in' => [ 'shop', 'product-catalog' ]
 	] );
 
 	if ( ! empty( $page_exists ) ) {
@@ -112,15 +137,15 @@ function wpwa_auto_generate_pages() {
 		update_option( 'wpwa_shop_page_id', $found_page->ID );
 		update_option( 'wpwa_catalog_slug', $found_page->post_name );
 		if ( ! get_option( 'wpwa_product_slug' ) ) {
-			update_option( 'wpwa_product_slug', 'produk' );
+			update_option( 'wpwa_product_slug', 'product' );
 		}
 		return;
 	}
 
-	// Create the "Toko" page with [toko] shortcode
+	// Create the "Shop" page with [toko] shortcode
 	$page_id = wp_insert_post( [
-		'post_title'   => 'Toko',
-		'post_name'    => 'toko',
+		'post_title'   => 'Shop',
+		'post_name'    => 'shop',
 		'post_status'  => 'publish',
 		'post_type'    => 'page',
 		'post_content' => '[toko]',
@@ -128,8 +153,8 @@ function wpwa_auto_generate_pages() {
 
 	if ( ! is_wp_error( $page_id ) ) {
 		update_option( 'wpwa_shop_page_id', $page_id );
-		update_option( 'wpwa_catalog_slug', 'toko' );
-		update_option( 'wpwa_product_slug', 'produk' );
+		update_option( 'wpwa_catalog_slug', 'shop' );
+		update_option( 'wpwa_product_slug', 'product' );
 	}
 }
 
@@ -143,6 +168,9 @@ function wpwa_enqueue_frontend_assets() {
 		'ajax_url' => admin_url( 'admin-ajax.php' ),
 		'nonce'    => wp_create_nonce( 'wpwa_order_nonce' ),
 		'currency_symbol' => wpwa_get_currency(),
+		'msg_processing'  => esc_html__( 'Processing...', 'webesia-wa-product-catalog' ),
+		'msg_error'       => esc_html__( 'An error occurred. Please try again.', 'webesia-wa-product-catalog' ),
+		'msg_send_btn'    => esc_html__( 'Send Order via WhatsApp', 'webesia-wa-product-catalog' ),
 	] );
 
 	// Remove <p> from excerpt inside our card

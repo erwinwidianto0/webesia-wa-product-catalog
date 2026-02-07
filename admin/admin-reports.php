@@ -42,23 +42,23 @@ function wpwa_reports_page_html() {
 	?>
 	<div class="wrap wpwa-reports-wrap">
 		<div class="wpwa-header-flex">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'Laporan Penjualan', 'webesia-wa-product-catalog' ); ?></h1>
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'Sales Reports', 'webesia-wa-product-catalog' ); ?></h1>
 			<form method="get" class="wpwa-filter-form">
 				<input type="hidden" name="post_type" value="simple_product">
 				<input type="hidden" name="page" value="wpwa-reports">
 				<?php wp_nonce_field( 'wpwa_filter_reports', 'wpwa_reports_nonce' ); ?>
 				<div class="wpwa-filter-inputs">
 					<select name="timeframe" id="wpwa-timeframe-select" onchange="this.form.submit()">
-						<option value="all" <?php selected($timeframe, 'all'); ?>><?php esc_html_e( 'Semua', 'webesia-wa-product-catalog' ); ?></option>
-						<option value="daily" <?php selected($timeframe, 'daily'); ?>><?php esc_html_e( 'Harian', 'webesia-wa-product-catalog' ); ?></option>
-						<option value="weekly" <?php selected($timeframe, 'weekly'); ?>><?php esc_html_e( 'Mingguan', 'webesia-wa-product-catalog' ); ?></option>
-						<option value="monthly" <?php selected($timeframe, 'monthly'); ?>><?php esc_html_e( 'Bulanan', 'webesia-wa-product-catalog' ); ?></option>
-						<option value="yearly" <?php selected($timeframe, 'yearly'); ?>><?php esc_html_e( 'Tahunan', 'webesia-wa-product-catalog' ); ?></option>
+						<option value="all" <?php selected($timeframe, 'all'); ?>><?php esc_html_e( 'All', 'webesia-wa-product-catalog' ); ?></option>
+						<option value="daily" <?php selected($timeframe, 'daily'); ?>><?php esc_html_e( 'Daily', 'webesia-wa-product-catalog' ); ?></option>
+						<option value="weekly" <?php selected($timeframe, 'weekly'); ?>><?php esc_html_e( 'Weekly', 'webesia-wa-product-catalog' ); ?></option>
+						<option value="monthly" <?php selected($timeframe, 'monthly'); ?>><?php esc_html_e( 'Monthly', 'webesia-wa-product-catalog' ); ?></option>
+						<option value="yearly" <?php selected($timeframe, 'yearly'); ?>><?php esc_html_e( 'Yearly', 'webesia-wa-product-catalog' ); ?></option>
 						<option value="custom" <?php selected($timeframe, 'custom'); ?>><?php esc_html_e( 'Custom', 'webesia-wa-product-catalog' ); ?></option>
 					</select>
 					<div id="wpwa-custom-dates" style="display: <?php echo ($timeframe == 'custom') ? 'flex' : 'none'; ?>;">
-						<input type="date" name="start_date" value="<?php echo esc_attr($start_date); ?>" placeholder="Dari">
-						<input type="date" name="end_date" value="<?php echo esc_attr($end_date); ?>" placeholder="Sampai">
+						<input type="date" name="start_date" value="<?php echo esc_attr($start_date); ?>" placeholder="From">
+						<input type="date" name="end_date" value="<?php echo esc_attr($end_date); ?>" placeholder="To">
 						<button type="submit" class="button button-primary"><?php esc_html_e( 'Filter', 'webesia-wa-product-catalog' ); ?></button>
 					</div>
 					<?php 
@@ -70,7 +70,7 @@ function wpwa_reports_page_html() {
 					$export_url = add_query_arg( array_merge( ['action' => 'wpwa_export_reports'], $query_args ), admin_url('admin-ajax.php') );
 					?>
 					<button type="button" class="button wpwa-export-btn" onclick="window.location.href='<?php echo esc_url($export_url); ?>'">
-						<span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Export Excel', 'webesia-wa-product-catalog' ); ?>
+						<span class="dashicons dashicons-download"></span> <?php esc_html_e( 'Export CSV', 'webesia-wa-product-catalog' ); ?>
 					</button>
 				</div>
 			</form>
@@ -95,16 +95,16 @@ function wpwa_reports_page_html() {
 					<div class="wpwa-hero-inner">
 						<div class="wpwa-hero-text">
 							<span class="wpwa-badge"><?php esc_html_e( 'Total Revenue', 'webesia-wa-product-catalog' ); ?></span>
-							<h2 class="wpwa-main-revenue">Rp<?php echo esc_html( number_format( $stats['revenue'], 0, ',', '.' ) ); ?></h2>
+							<h2 class="wpwa-main-revenue"><?php echo wpwa_format_price( $stats['revenue'] ); ?></h2>
 						</div>
 						<div class="wpwa-hero-mini">
 							<div class="mini-item">
-								<span class="m-label"><?php esc_html_e( 'Bulan Ini', 'webesia-wa-product-catalog' ); ?></span>
-								<span class="m-value">Rp<?php echo esc_html( number_format( $stats['rev_this_month'], 0, ',', '.' ) ); ?></span>
+								<span class="m-label"><?php esc_html_e( 'This Month', 'webesia-wa-product-catalog' ); ?></span>
+								<span class="m-value"><?php echo wpwa_format_price( $stats['rev_this_month'] ); ?></span>
 							</div>
 							<div class="mini-item">
-								<span class="m-label"><?php esc_html_e( 'Bulan Lalu', 'webesia-wa-product-catalog' ); ?></span>
-								<span class="m-value">Rp<?php echo esc_html( number_format( $stats['rev_last_month'], 0, ',', '.' ) ); ?></span>
+								<span class="m-label"><?php esc_html_e( 'Last Month', 'webesia-wa-product-catalog' ); ?></span>
+								<span class="m-value"><?php echo wpwa_format_price( $stats['rev_last_month'] ); ?></span>
 							</div>
 						</div>
 					</div>
@@ -112,18 +112,18 @@ function wpwa_reports_page_html() {
 
 				<div class="wpwa-hero-side">
 					<div class="wpwa-status-card">
-						<h3><?php esc_html_e( 'Status Pesanan', 'webesia-wa-product-catalog' ); ?></h3>
+						<h3><?php esc_html_e( 'Order Status', 'webesia-wa-product-catalog' ); ?></h3>
 						<div class="status-summary">
 							<div class="s-row completed">
-								<span class="s-label"><?php esc_html_e( 'Selesai', 'webesia-wa-product-catalog' ); ?></span>
+								<span class="s-label"><?php esc_html_e( 'Completed', 'webesia-wa-product-catalog' ); ?></span>
 								<span class="s-count"><?php echo esc_html( number_format_i18n( $stats['completed'] ) ); ?></span>
 							</div>
 							<div class="s-row pending">
-								<span class="s-label"><?php esc_html_e( 'Menunggu', 'webesia-wa-product-catalog' ); ?></span>
+								<span class="s-label"><?php esc_html_e( 'Pending', 'webesia-wa-product-catalog' ); ?></span>
 								<span class="s-count"><?php echo esc_html( number_format_i18n( $stats['pending'] ) ); ?></span>
 							</div>
 							<div class="s-row failed">
-								<span class="s-label"><?php esc_html_e( 'Gagal', 'webesia-wa-product-catalog' ); ?></span>
+								<span class="s-label"><?php esc_html_e( 'Failed', 'webesia-wa-product-catalog' ); ?></span>
 								<span class="s-count"><?php echo esc_html( number_format_i18n( $stats['failed'] ) ); ?></span>
 							</div>
 						</div>
@@ -138,11 +138,11 @@ function wpwa_reports_page_html() {
 						<div class="card-title">
 							<span class="dashicons dashicons-chart-bar"></span>
 							<h3><?php 
-								if ($timeframe == 'all') esc_html_e( 'Tren Penjualan (6 Bulan Terakhir)', 'webesia-wa-product-catalog' );
-								elseif ($timeframe == 'daily') esc_html_e( 'Tren Penjualan (Hari Ini)', 'webesia-wa-product-catalog' );
-								elseif ($timeframe == 'weekly') esc_html_e( 'Tren Penjualan (Harian)', 'webesia-wa-product-catalog' );
-								elseif ($timeframe == 'yearly') esc_html_e( 'Tren Penjualan (Bulanan)', 'webesia-wa-product-catalog' );
-								else esc_html_e( 'Tren Penjualan (Mingguan)', 'webesia-wa-product-catalog' );
+								if ($timeframe == 'all') esc_html_e( 'Sales Trend (Last 6 Months)', 'webesia-wa-product-catalog' );
+								elseif ($timeframe == 'daily') esc_html_e( 'Sales Trend (Today)', 'webesia-wa-product-catalog' );
+								elseif ($timeframe == 'weekly') esc_html_e( 'Sales Trend (Daily)', 'webesia-wa-product-catalog' );
+								elseif ($timeframe == 'yearly') esc_html_e( 'Sales Trend (Monthly)', 'webesia-wa-product-catalog' );
+								else esc_html_e( 'Sales Trend (Weekly)', 'webesia-wa-product-catalog' );
 							?></h3>
 						</div>
 						<div class="wpwa-css-chart">
@@ -157,7 +157,7 @@ function wpwa_reports_page_html() {
 						?>
 						<div class="chart-bar-wrap">
 							<div class="chart-bar" style="height: <?php echo esc_attr( max(5, $percent) ); ?>%;">
-								<span class="bar-tooltip">Rp<?php echo esc_html( number_format($data['value'], 0, ',', '.') ); ?></span>
+								<span class="bar-tooltip"><?php echo wpwa_format_price( $data['value'] ); ?></span>
 							</div>
 							<span class="chart-day"><?php echo esc_html( $data['label'] ); ?></span>
 						</div>
@@ -169,7 +169,7 @@ function wpwa_reports_page_html() {
 				<div class="wpwa-card top-products-card">
 					<div class="card-title">
 						<span class="dashicons dashicons-star-filled"></span>
-						<h3><?php esc_html_e( 'Produk Unggulan', 'webesia-wa-product-catalog' ); ?></h3>
+						<h3><?php esc_html_e( 'Top Products', 'webesia-wa-product-catalog' ); ?></h3>
 					</div>
 					<div class="top-products-list">
 						<?php if ( ! empty( $stats['top_products'] ) ) : ?>
@@ -180,13 +180,13 @@ function wpwa_reports_page_html() {
 									<a href="<?php echo esc_url( get_permalink( $product->product_id ) ); ?>" target="_blank" class="prod-name">
 										<?php echo esc_html( wp_trim_words( $product->product_name, 4 ) ); ?>
 									</a>
-									<span class="prod-sales"><?php echo esc_html( number_format_i18n( $product->total_qty ) ); ?> unit terjual</span>
+									<span class="prod-sales"><?php echo esc_html( number_format_i18n( $product->total_qty ) ); ?> units sold</span>
 								</div>
-								<div class="prod-amount">Rp<?php echo esc_html( number_format( $product->total_sales, 0, ',', '.' ) ); ?></div>
+								<div class="prod-amount"><?php echo wpwa_format_price( $product->total_sales ); ?></div>
 							</div>
 							<?php endforeach; ?>
 						<?php else : ?>
-							<p class="empty-state"><?php esc_html_e( 'Belum ada transaksi produk.', 'webesia-wa-product-catalog' ); ?></p>
+							<p class="empty-state"><?php esc_html_e( 'No product transactions yet.', 'webesia-wa-product-catalog' ); ?></p>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -294,7 +294,7 @@ function wpwa_get_order_stats($timeframe = 'monthly', $start_custom = '', $end_c
 	$stats['daily_data'] = [];
 	
 	if ($timeframe == 'all') {
-		$months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+		$months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		for ($i = 5; $i >= 0; $i--) {
 			$m_offset = "-$i month";
 			$date_start = gmdate('Y-m-01 00:00:00', strtotime($m_offset, current_time('timestamp')));
@@ -314,7 +314,7 @@ function wpwa_get_order_stats($timeframe = 'monthly', $start_custom = '', $end_c
 			$stats['daily_data'][] = ['label' => "$h_str:00", 'value' => $total];
 		}
 	} elseif ($timeframe == 'weekly' || $timeframe == 'custom') {
-		$days_of_week = ['Mon' => 'Sen', 'Tue' => 'Sel', 'Wed' => 'Rab', 'Thu' => 'Kam', 'Fri' => 'Jum', 'Sat' => 'Sab', 'Sun' => 'Min'];
+		$days_of_week = ['Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun'];
 		
 		if ($timeframe == 'custom' && !empty($start_custom) && !empty($end_custom)) {
 			$begin = new DateTime($start_custom);
@@ -342,7 +342,7 @@ function wpwa_get_order_stats($timeframe = 'monthly', $start_custom = '', $end_c
 			}
 		}
 	} elseif ($timeframe == 'yearly') {
-		$months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+		$months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		$curr_year = gmdate('Y', current_time('timestamp'));
 		for ($m = 1; $m <= 12; $m++) {
 			$date_start = "$curr_year-" . sprintf("%02d", $m) . "-01 00:00:00";
@@ -418,7 +418,7 @@ function wpwa_handle_reports_export() {
 
 	$orders = $wpdb->get_results( $query );
 
-	$filename = 'Laporan_Penjualan_' . gmdate('Y-m-d') . '.csv';
+	$filename = 'Sales_Report_' . gmdate('Y-m-d') . '.csv';
 
 	header('Content-Type: text/csv; charset=utf-8');
 	header('Content-Disposition: attachment; filename=' . $filename);
@@ -428,12 +428,12 @@ function wpwa_handle_reports_export() {
 	// CSV Header
 	fputcsv($output, [
 		'Order ID', 
-		'No. Pesanan', 
-		'Nama Pelanggan', 
-		'No. WhatsApp', 
+		'Order No.', 
+		'Customer Name', 
+		'WhatsApp Number', 
 		'Total Amount', 
 		'Status', 
-		'Tanggal'
+		'Date'
 	]);
 
 	foreach ($orders as $order) {

@@ -40,15 +40,15 @@ function wpwa_render_product_filter( $args = [] ) {
 	] );
 	?>
 	<div class="wpwa-filter-widget">
-		<h3 class="widget-title"><?php esc_html_e( 'Filter Produk', 'webesia-wa-product-catalog' ); ?></h3>
+		<h3 class="widget-title"><?php esc_html_e( 'Product Filter', 'webesia-wa-product-catalog' ); ?></h3>
 		<form action="<?php echo esc_url( $action_url ); ?>" method="get" class="wpwa-sidebar-filter-form">
 			<!-- Preserve existing query args if needed, but for now standard GET form is fine -->
 			
 			<!-- Category Filter -->
 			<div class="wpwa-filter-row">
-				<label><?php esc_html_e( 'Kategori', 'webesia-wa-product-catalog' ); ?></label>
+				<label><?php esc_html_e( 'Category', 'webesia-wa-product-catalog' ); ?></label>
 				<select name="product_category" class="wpwa-sidebar-input">
-					<option value=""><?php esc_html_e( 'Semua Kategori', 'webesia-wa-product-catalog' ); ?></option>
+					<option value=""><?php esc_html_e( 'All Categories', 'webesia-wa-product-catalog' ); ?></option>
 					<?php foreach ( $categories as $cat ) : ?>
 						<option value="<?php echo esc_attr( $cat->slug ); ?>" <?php selected( $current_cat, $cat->slug ); ?>>
 							<?php echo esc_html( $cat->name ); ?>
@@ -59,27 +59,27 @@ function wpwa_render_product_filter( $args = [] ) {
 
 			<!-- Price Filter -->
 			<div class="wpwa-filter-row">
-				<label><?php esc_html_e( 'Rentang Harga', 'webesia-wa-product-catalog' ); ?></label>
+				<label><?php esc_html_e( 'Price Range', 'webesia-wa-product-catalog' ); ?></label>
 				<div class="wpwa-price-fields">
-					<input type="number" name="min_price" value="<?php echo esc_attr( $current_min ); ?>" placeholder="Rp Min" class="wpwa-sidebar-input">
-					<input type="number" name="max_price" value="<?php echo esc_attr( $current_max ); ?>" placeholder="Rp Max" class="wpwa-sidebar-input">
+					<input type="number" name="min_price" value="<?php echo esc_attr( $current_min ); ?>" placeholder="<?php esc_attr_e( 'Min Price', 'webesia-wa-product-catalog' ); ?>" class="wpwa-sidebar-input">
+					<input type="number" name="max_price" value="<?php echo esc_attr( $current_max ); ?>" placeholder="<?php esc_attr_e( 'Max Price', 'webesia-wa-product-catalog' ); ?>" class="wpwa-sidebar-input">
 				</div>
 			</div>
 
 			<!-- Sort Filter -->
 			<div class="wpwa-filter-row">
-				<label><?php esc_html_e( 'Urutan', 'webesia-wa-product-catalog' ); ?></label>
+				<label><?php esc_html_e( 'Sort By', 'webesia-wa-product-catalog' ); ?></label>
 				<select name="orderby" class="wpwa-sidebar-input">
-					<option value="date" <?php selected( $current_sort, 'date' ); ?>><?php esc_html_e( 'Terbaru', 'webesia-wa-product-catalog' ); ?></option>
-					<option value="price" <?php selected( $current_sort, 'price' ); ?>><?php esc_html_e( 'Harga: Terendah', 'webesia-wa-product-catalog' ); ?></option>
-					<option value="price-desc" <?php selected( $current_sort, 'price-desc' ); ?>><?php esc_html_e( 'Harga: Tertinggi', 'webesia-wa-product-catalog' ); ?></option>
+					<option value="date" <?php selected( $current_sort, 'date' ); ?>><?php esc_html_e( 'Latest', 'webesia-wa-product-catalog' ); ?></option>
+					<option value="price" <?php selected( $current_sort, 'price' ); ?>><?php esc_html_e( 'Price: Low to High', 'webesia-wa-product-catalog' ); ?></option>
+					<option value="price-desc" <?php selected( $current_sort, 'price-desc' ); ?>><?php esc_html_e( 'Price: High to Low', 'webesia-wa-product-catalog' ); ?></option>
 				</select>
 			</div>
 
 			<div class="wpwa-sidebar-actions">
-				<button type="submit" class="wpwa-btn-apply"><?php esc_html_e( 'Terapkan Filter', 'webesia-wa-product-catalog' ); ?></button>
+				<button type="submit" class="wpwa-btn-apply"><?php esc_html_e( 'Apply Filter', 'webesia-wa-product-catalog' ); ?></button>
 				<?php if ( ! empty( $current_cat ) || ! empty( $current_min ) || ! empty( $current_max ) || $current_sort !== 'date' ) : ?>
-					<a href="<?php echo esc_url( get_permalink( $shop_page_id ) ); ?>" class="wpwa-btn-clear"><?php esc_html_e( 'Hapus Semua', 'webesia-wa-product-catalog' ); ?></a>
+					<a href="<?php echo esc_url( get_permalink( $shop_page_id ) ); ?>" class="wpwa-btn-clear"><?php esc_html_e( 'Clear All', 'webesia-wa-product-catalog' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</form>
@@ -125,7 +125,7 @@ function wpwa_get_related_products_html( $product_id, $limit = 4 ) {
 	ob_start();
 	?>
 	<div class="wpwa-related-products">
-		<h2 class="wpwa-section-title"><?php esc_html_e( 'Produk Terkait', 'webesia-wa-product-catalog' ); ?></h2>
+		<h2 class="wpwa-section-title"><?php esc_html_e( 'Related Products', 'webesia-wa-product-catalog' ); ?></h2>
 		<div class="wpwa-product-grid">
 			<?php 
 			while ( $query->have_posts() ) : $query->the_post();
@@ -164,7 +164,7 @@ function wpwa_get_product_gallery_html( $product_id ) {
 			<!-- Main Image (Top) -->
 			<div class="wpwa-tokped-main-image">
 				<?php if ( $has_sale ) : ?>
-					<div class="wpwa-sale-badge"><?php esc_html_e( 'DISKON', 'webesia-wa-product-catalog' ); ?></div>
+					<div class="wpwa-sale-badge"><?php esc_html_e( 'SALE', 'webesia-wa-product-catalog' ); ?></div>
 				<?php endif; ?>
 				<?php if ( has_post_thumbnail( $product_id ) ) : ?>
 					<img class="wpwa-main-img" src="<?php echo esc_url( get_the_post_thumbnail_url( $product_id, 'large' ) ); ?>" alt="<?php echo esc_attr( get_the_title( $product_id ) ); ?>">
@@ -222,6 +222,58 @@ function wpwa_get_product_gallery_html( $product_id ) {
 			</div>
 		</div>
 	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/**
+ * Get product breadcrumb HTML
+ *
+ * @return string HTML output
+ */
+function wpwa_get_breadcrumb_html() {
+	if ( ! is_singular( 'simple_product' ) ) {
+		return '';
+	}
+
+	$delimiter = '<span class="wpwa-breadcrumb-separator">/</span>';
+	$home_text = esc_html__( 'Home', 'webesia-wa-product-catalog' );
+	$home_link = home_url( '/' );
+	
+	// Get Shop Page
+	$shop_page_id = get_option( 'wpwa_shop_page_id' );
+	$shop_link    = $shop_page_id ? get_permalink( $shop_page_id ) : home_url( '/shop/' );
+	$shop_text    = $shop_page_id ? get_the_title( $shop_page_id ) : esc_html__( 'Shop', 'webesia-wa-product-catalog' );
+
+	ob_start();
+	?>
+	<nav class="wpwa-breadcrumb">
+		<a href="<?php echo esc_url( $home_link ); ?>"><?php echo esc_html( $home_text ); ?></a>
+		<?php echo $delimiter; ?>
+		
+		<?php if ( $shop_page_id && ! is_page( $shop_page_id ) ) : ?>
+			<a href="<?php echo esc_url( $shop_link ); ?>"><?php echo esc_html( $shop_text ); ?></a>
+			<?php echo $delimiter; ?>
+		<?php endif; ?>
+
+		<?php
+		$terms = get_the_terms( get_the_ID(), 'product_category' );
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			// Sort by parent to get hierarchy (basic)
+			// For simplicity take the first one and its parents
+			$term = $terms[0];
+			if ( $term->parent ) {
+				$parent = get_term( $term->parent, 'product_category' );
+				echo '<a href="' . esc_url( get_term_link( $parent ) ) . '">' . esc_html( $parent->name ) . '</a>';
+				echo $delimiter;
+			}
+			echo '<a href="' . esc_url( get_term_link( $term ) ) . '">' . esc_html( $term->name ) . '</a>';
+			echo $delimiter;
+		}
+		?>
+		
+		<span class="wpwa-breadcrumb-current"><?php the_title(); ?></span>
+	</nav>
 	<?php
 	return ob_get_clean();
 }

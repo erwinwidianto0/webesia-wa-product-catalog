@@ -21,7 +21,7 @@ class WPWA_Elementor_Related_Products extends \Elementor\Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'general' ];
+		return [ 'webesia-wa-catalog' ];
 	}
 
 	protected function register_controls() {

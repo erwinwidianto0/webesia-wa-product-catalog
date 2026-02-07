@@ -11,24 +11,20 @@ add_filter( 'gettext', 'wpwa_dynamic_translation_id', 10, 3 );
 add_filter( 'ngettext', 'wpwa_dynamic_translation_plural_id', 10, 5 );
 add_filter( 'gettext_with_context', 'wpwa_dynamic_translation_context_id', 10, 4 );
 
-function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
-	if ( 'webesia-wa-product-catalog' !== $domain ) {
-		return $translated;
-	}
-
-	$locale = get_locale();
-	if ( strpos( $locale, 'id' ) !== 0 ) {
-		return $translated;
-	}
-
-	$translations = [
+/**
+ * Get the core translation mapping
+ */
+function wpwa_get_translation_maps() {
+	return [
 		// Common Strings
 		'Home'                                => 'Beranda',
+		'Category'                            => 'Kategori',
 		'Category:'                            => 'Kategori:',
 		'Categories'                          => 'Kategori',
+		'All Categories'                      => 'Semua Kategori',
 		'SKU:'                                => 'SKU:',
 		'Read More'                           => 'Selengkapnya',
-		'Ringkasan Toko (WebEsia Product Catalog)' => 'Ringkasan Toko (WebEsia Product Catalog)',
+		'Ringkasan Toko (WA WebEsia Catalog)' => 'Ringkasan Toko (WA WebEsia Catalog)',
 		'Total Produk'                        => 'Total Produk',
 		'Pesanan Selesai'                     => 'Pesanan Selesai',
 		'Akses Cepat:'                        => 'Akses Cepat:',
@@ -42,10 +38,10 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Add New Product'                     => 'Tambah Produk Baru',
 		'Product Short Description'           => 'Deskripsi Singkat Produk',
 		'Product Short Description (Excerpt)' => 'Kutipan / Deskripsi Singkat Produk',
-		'Kutipan / Deskripsi Singkat'         => 'Kutipan / Deskripsi Singkat',
-		'Tampilkan ringkasan produk untuk memikat pembeli di halaman katalog.' => 'Tampilkan ringkasan produk untuk memikat pembeli di halaman katalog.',
-		'Contoh: Layanan profesional terintegrasi untuk meningkatkan performa bisnis Anda...' => 'Contoh: Layanan profesional terintegrasi untuk meningkatkan performa bisnis Anda...',
-		'Kutipan adalah teks ringkas operasional yang akan tampil di kartu produk.' => 'Kutipan adalah teks ringkas operasional yang akan tampil di kartu produk.',
+		'Short Description / Excerpt'         => 'Kutipan / Deskripsi Singkat',
+		'Display a product summary to attract buyers on the catalog page.' => 'Tampilkan ringkasan produk untuk memikat pembeli di halaman katalog.',
+		'Example: Premium industrial tank with optimized capacity for your business needs...' => 'Contoh: Tangki industri premium dengan kapasitas optimal untuk kebutuhan bisnis Anda...',
+		'Excerpt is a concise operational text that will appear in the product card.' => 'Kutipan adalah teks ringkas operasional yang akan tampil di kartu produk.',
 		'Tuliskan deskripsi singkat yang menarik untuk pelanggan.' => 'Tuliskan deskripsi singkat yang menarik untuk pelanggan.',
 		'WA Products'                         => 'Produk WA',
 		'Order List'                          => 'Daftar Pesanan',
@@ -56,6 +52,11 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Add product gallery images'          => 'Tambah gambar galeri produk',
 		'Gallery saved'                       => 'Galeri disimpan',
 		'Delete image'                        => 'Hapus gambar',
+		'Tab Title (e.g. Features)'           => 'Judul Tab (misal: Fitur)',
+		'Remove Tab'                          => 'Hapus Tab',
+		'Add New Tab'                         => 'Tambah Tab Baru',
+		'Tab Title'                           => 'Judul Tab',
+		'Are you sure you want to remove this tab?' => 'Apakah Anda yakin ingin menghapus tab ini?',
 		'Featured Image'                      => 'Gambar Utama',
 		'Set featured image'                  => 'Atur Gambar Utama',
 		'Remove featured image'               => 'Hapus Gambar Utama',
@@ -71,14 +72,20 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Your Name'                           => 'Nama Anda',
 		'John Doe'                            => 'Budi Santoso',
 		'Total Estimate:'                     => 'Total Estimasi:',
+		'ESTIMATED TOTAL:'                    => 'TOTAL ESTIMASI:',
 		'WhatsApp Number'                     => 'Nomor WhatsApp',
+		'628xxxxxxxxxx'                       => '08xxxxxxxxxx',
 		'Shipping Address'                    => 'Alamat Pengiriman',
-		'Street, City, Zip Code'              => 'Nama Jalan, Kota, Kode Pos',
+		'Street Name, City, Postal Code'      => 'Nama Jalan, Kota, Kode Pos',
 		'Note'                                => 'Catatan',
-		'Start date, color preference, etc.'  => 'Tanggal pengiriman, warna, dll.',
+		'Delivery Date, Color, etc'           => 'Tanggal Pengiriman, Warna, dll',
 		'Send Order via WhatsApp'             => 'Kirim Pesanan via WhatsApp',
 		'Order via WhatsApp'                  => 'Pesan via WhatsApp',
-		'Beli via WhatsApp'                   => 'Beli via WhatsApp',
+		'Please fill out the form below to order.' => 'Silahkan isi form di bawah untuk memesan.',
+		'Buy via WhatsApp'                    => 'Beli via WhatsApp',
+		'Hello, I would like to order "%1$s" (ID: %2$d).' => 'Halo Admin, saya ingin pesan "%1$s" (ID: %2$d).',
+		"Hello Admin, I would like to order \"{product_name}\" with URL \"{product_url}\":\n\nQuantity: {qty}\nTotal: {total}\nName: {customer_name}\nPhone: {customer_phone}\nAddress: {address}\nNote: {note}\n\nThank you." => "Halo Admin, saya ingin pesan \"{product_name}\" dengan URL \"{product_url}\":\n\nJumlah: {qty}\nTotal: {total}\nNama: {customer_name}\nTelepon: {customer_phone}\nAlamat: {address}\nCatatan: {note}\n\nTerima kasih.",
+		'Additional Details:'                 => 'Detail Tambahan:',
 
 		// Products / Catalog
 		'No products found.'                  => 'Produk tidak ditemukan.',
@@ -87,6 +94,18 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'No products found with those criteria.' => 'Tidak ada produk yang ditemukan dengan kriteria tersebut.',
 		'« Previous'                          => '« Sebelumnya',
 		'Next »'                              => 'Selanjutnya »',
+		'Price Range'                         => 'Rentang Harga',
+		'Min Price'                           => 'Harga Min',
+		'Max Price'                           => 'Harga Max',
+		'Sort By'                             => 'Urutkan Berdasarkan',
+		'Latest'                              => 'Terbaru',
+		'Price: Low to High'                  => 'Harga: Rendah ke Tinggi',
+		'Price: High to Low'                  => 'Harga: Tinggi ke Rendah',
+		'Apply Filter'                        => 'Terapkan Filter',
+		'Clear All'                           => 'Hentikan Semua',
+		'SALE'                                => 'PROMO',
+		'View Details'                        => 'Lihat Detail',
+		'Shop'                                => 'Toko',
 
 		// Reviews
 		'Average Rating'                      => 'Rating Rata-rata',
@@ -108,7 +127,13 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'No reviews yet. Be the first to review!' => 'Belum ada ulasan. Jadilah yang pertama memberikan ulasan!',
 		'Name'                                => 'Nama',
 		'Email'                               => 'Email',
+		'Email Address'                       => 'Alamat Email',
+		'Write your experience using this product...' => 'Tuliskan pengalaman Bapak menggunakan produk ini...',
 		'%s ago'                              => '%s yang lalu',
+		'Reviews (%d)'                        => 'Ulasan (%d)',
+		'%d Reviews'                          => '%d Ulasan',
+		'Based on %s review'                  => 'Berdasarkan %s ulasan',
+		'Based on %s reviews'                 => 'Berdasarkan %s ulasan',
 		
 		// Settings / Admin
 		'WhatsApp Settings'                   => 'Pengaturan WhatsApp',
@@ -162,7 +187,6 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Unit Terjual'                        => 'Unit Terjual',
 		'Estimasi Omzet'                      => 'Estimasi Omzet',
 		'Belum ada data produk.'              => 'Belum ada data produk.',
-		'Reports'                             => 'Laporan',
 		'Tren Penjualan (Minggu Ini)'         => 'Tren Penjualan (Minggu Ini)',
 		'Tren Penjualan (Harian)'            => 'Tren Penjualan (Harian)',
 		'Tren Penjualan (Mingguan)'           => 'Tren Penjualan (Mingguan)',
@@ -190,7 +214,6 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Available Tags:'                     => 'Tag yang tersedia:',
 		'Tips:'                               => 'Tips:',
 		'Use {details} to automatically list all fields from the "Order Form" tab. If you don\'t use {details}, custom fields will be appended at the end of the message.' => 'Gunakan {details} untuk mencantumkan semua field dari tab "Formulir Order" secara otomatis. Jika Bapak tidak menggunakan {details}, field kustom akan ditambahkan di akhir pesan.',
-		'pertumbuhan dibanding bulan lalu'    => 'pertumbuhan dibanding bulan lalu',
 		'Umum'                                => 'Umum',
 		'Formulir Order'                      => 'Formulir Order',
 		'Bahasa'                              => 'Bahasa',
@@ -202,7 +225,116 @@ function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
 		'Alternative:'                        => 'Alternatif:',
 		'You can also use the shortcode'      => 'Bapak juga bisa menggunakan shortcode',
 		'in Elementor, Gutenberg, or any page builder.' => 'di Elementor, Gutenberg, atau page builder apapun.',
+		'Processing...'                       => 'Memproses...',
+		'An error occurred. Please try again.' => 'Terjadi kesalahan. Silakan coba lagi.',
+		'WA WebEsia Catalog'                  => 'Katalog WA WebEsia',
+		'Plugin Language'                     => 'Bahasa Plugin',
+		'English (Default)'                   => 'Inggris (Bawaan)',
+		'Bahasa Indonesia (Bundled)'          => 'Bahasa Indonesia (Internal)',
+		'Custom Translate'                    => 'Custom Translate',
+		'Choose the primary language for your catalog.' => 'Pilih bahasa utama untuk katalog Bapak.',
+		'Custom Translations'                 => 'Terjemahan Kustom',
+		'Search keywords...'                  => 'Cari kata kunci...',
+		'Translate or modify any string below. Leave empty to use the original English text.' => 'Terjemahkan atau ubah teks di bawah ini. Kosongkan untuk menggunakan teks asli Bahasa Inggris.',
+		'Original String (English)'           => 'Teks Asli (Inggris)',
+		'Your Translation'                    => 'Terjemahan Bapak',
+
+		// Post Type & Taxonomy Labels
+		'New Product'                         => 'Produk Baru',
+		'Edit Product'                        => 'Edit Produk',
+		'View Product'                        => 'Lihat Produk',
+		'All Products'                        => 'Semua Produk',
+		'Search Products'                     => 'Cari Produk',
+		'Parent Products:'                    => 'Produk Induk:',
+		'No products found in Trash.'         => 'Produk tidak ditemukan di Tempat Sampah.',
+		'Main Image'                          => 'Gambar Utama',
+		'Set Main Image'                      => 'Atur Gambar Utama',
+		'Remove Main Image'                   => 'Hapus Gambar Utama',
+		'Use as Main Image'                   => 'Gunakan sebagai Gambar Utama',
+		'Search Categories'                   => 'Cari Kategori',
+		'Popular Categories'                  => 'Kategori Populer',
+		'Parent Category'                     => 'Kategori Induk',
+		'Parent Category:'                    => 'Kategori Induk:',
+		'Edit Category'                       => 'Edit Kategori',
+		'Update Category'                     => 'Perbarui Kategori',
+		'Add New Category'                    => 'Tambah Kategori Baru',
+		'New Category Name'                   => 'Nama Kategori Baru',
+		'Separate categories with commas'     => 'Pisahkan kategori dengan koma',
+		'Add or remove categories'            => 'Tambah atau hapus kategori',
+		'Choose from the most used categories' => 'Pilih dari kategori yang paling sering digunakan',
+		'Gallery saved successfully'          => 'Galeri berhasil disimpan',
+		'Product updated. <a href="%s">View product</a>' => 'Produk diperbarui. <a href="%s">Lihat produk</a>',
+		'Custom field updated.'               => 'Field kustom diperbarui.',
+		'Custom field deleted.'               => 'Field kustom dihapus.',
+		'Product restored to revision from %s' => 'Produk dikembalikan ke revisi dari %s',
+		'Product published. <a href="%s">View product</a>' => 'Produk diterbitkan. <a href="%s">Lihat produk</a>',
+		'Product saved.'                      => 'Produk disimpan.',
+		'Product submitted. <a target="_blank" href="%s">Preview product</a>' => 'Produk dikirim. <a target="_blank" href="%s">Pratinjau produk</a>',
+		'Product scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview product</a>' => 'Produk dijadwalkal: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Pratinjau produk</a>',
+		'Product draft updated. <a target="_blank" href="%s">Preview product</a>' => 'Draf produk diperbarui. <a target="_blank" href="%s">Pratinjau produk</a>',
+		'M j, Y @ G:i'                         => 'j M Y @ G:i',
+
+		// Reports & Dashboard
+		'Sales Reports'                       => 'Laporan Penjualan',
+		'All'                                 => 'Semua',
+		'Daily'                               => 'Harian',
+		'Weekly'                              => 'Mingguan',
+		'Monthly'                             => 'Bulanan',
+		'Yearly'                              => 'Tahunan',
+		'Export CSV'                          => 'Ekspor CSV',
+		'Order Status'                        => 'Status Pesanan',
+		'Sales Trend (Last 6 Months)'         => 'Tren Penjualan (6 Bulan Terakhir)',
+		'Sales Trend (Today)'                 => 'Tren Penjualan (Hari Ini)',
+		'Sales Trend (Daily)'                 => 'Tren Penjualan (Harian)',
+		'Sales Trend (Monthly)'               => 'Tren Penjualan (Bulanan)',
+		'Sales Trend (Weekly)'                => 'Tren Penjualan (Mingguan)',
+		'units sold'                          => 'unit terjual',
+		'No product transactions yet.'        => 'Belum ada transaksi produk.',
+		'No data available yet.'              => 'Belum ada data tersedia.',
+
+		// Orders
+		'Mark as Completed'                   => 'Tandai Selesai',
+		'Mark as Failed'                      => 'Tandai Gagal',
+		'Order updated.'                      => 'Pesanan diperbarui.',
+		'Failed to save order to database.'   => 'Gagal menyimpan pesanan ke database.',
+		'Additional Details:'                 => 'Detail Tambahan:',
+		'%d order updated.'                   => '%d pesanan diperbarui.',
+		'%d orders updated.'                  => '%d pesanan diperbarui.',
 	];
+}
+
+function wpwa_dynamic_translation_id( $translated, $text, $domain ) {
+	if ( 'webesia-wa-product-catalog' !== $domain ) {
+		return $translated;
+	}
+
+	$lang_mode = get_option( 'wpwa_plugin_language', 'en' );
+	
+	if ( 'en' === $lang_mode ) {
+		return $translated;
+	}
+
+	if ( 'custom' === $lang_mode ) {
+		$custom_maps = get_option( 'wpwa_custom_translations', [] );
+		if ( isset( $custom_maps[$text] ) && ! empty( $custom_maps[$text] ) ) {
+			return $custom_maps[$text];
+		}
+		return $translated;
+	}
+
+	$translations = [];
+
+	if ( 'id' === $lang_mode ) {
+		$translations = wpwa_get_translation_maps();
+	} else {
+		// Old behavior: follow WP locale
+		$locale = get_locale();
+		if ( strpos( $locale, 'id' ) === 0 ) {
+			$translations = wpwa_get_translation_maps();
+		} else {
+			return $translated;
+		}
+	}
 
 	if ( isset( $translations[$text] ) ) {
 		return $translations[$text];
@@ -216,27 +348,11 @@ function wpwa_dynamic_translation_plural_id( $translated, $single, $plural, $num
 		return $translated;
 	}
 
-	$locale = get_locale();
-	if ( strpos( $locale, 'id' ) !== 0 ) {
-		return $translated;
-	}
-
-	// In Indonesian, there is no plural grammatic change (just repeat the word or use context)
-	$translations = [
-		'Based on %s review'  => 'Berdasarkan %s ulasan',
-		'Based on %s reviews' => 'Berdasarkan %s ulasan',
-		'Ulasan (%d)'         => 'Ulasan (%d)',
-		'Reviews (%d)'        => 'Ulasan (%d)',
-		'%d Reviews'          => '%d Ulasan',
-		'%d Ulasan'           => '%d Ulasan',
-	];
-
-	if ( isset( $translations[$single] ) ) {
-		return $translations[$single];
-	}
+	// Just use the singular logic for map lookup
+	$translated_single = wpwa_dynamic_translation_id( $single, $single, $domain );
 	
-	if ( isset( $translations[$plural] ) ) {
-		return $translations[$plural];
+	if ( $translated_single !== $single ) {
+		return $translated_single;
 	}
 
 	return $translated;
@@ -247,12 +363,7 @@ function wpwa_dynamic_translation_context_id( $translated, $text, $context, $dom
 		return $translated;
 	}
 
-	$locale = get_locale();
-	if ( strpos( $locale, 'id' ) !== 0 ) {
-		return $translated;
-	}
-
-	// Just reuse the main translation map for simplicity
+	// Just reuse the main translation map
 	return wpwa_dynamic_translation_id( $translated, $text, $domain );
 }
 
@@ -260,7 +371,7 @@ function wpwa_dynamic_translation_context_id( $translated, $text, $context, $dom
  * Get Currency Symbol/Code
  */
 function wpwa_get_currency() {
-	return get_option( 'wpwa_currency', 'Rp' );
+	return get_option( 'wpwa_currency', '$' );
 }
 
 /**

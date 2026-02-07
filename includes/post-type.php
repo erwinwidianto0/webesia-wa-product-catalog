@@ -8,19 +8,22 @@ function wpwa_register_post_type() {
 	$labels = [
 		'name'               => _x( 'Products', 'post type general name', 'webesia-wa-product-catalog' ),
 		'singular_name'      => _x( 'Product', 'post type singular name', 'webesia-wa-product-catalog' ),
+		'menu_name'          => _x( 'WA Products', 'admin menu', 'webesia-wa-product-catalog' ),
+		'name_admin_bar'     => _x( 'Product', 'add new on admin bar', 'webesia-wa-product-catalog' ),
 		'add_new'            => _x( 'Add New', 'product', 'webesia-wa-product-catalog' ),
 		'add_new_item'       => esc_html__( 'Add New Product', 'webesia-wa-product-catalog' ),
-		'edit_item'          => esc_html__( 'Edit Product', 'webesia-wa-product-catalog' ),
 		'new_item'           => esc_html__( 'New Product', 'webesia-wa-product-catalog' ),
+		'edit_item'          => esc_html__( 'Edit Product', 'webesia-wa-product-catalog' ),
 		'view_item'          => esc_html__( 'View Product', 'webesia-wa-product-catalog' ),
+		'all_items'          => esc_html__( 'All Products', 'webesia-wa-product-catalog' ),
 		'search_items'       => esc_html__( 'Search Products', 'webesia-wa-product-catalog' ),
-		'not_found'          => esc_html__( 'No products found', 'webesia-wa-product-catalog' ),
-		'not_found_in_trash' => esc_html__( 'No products found in Trash', 'webesia-wa-product-catalog' ),
-		'menu_name'          => _x( 'WA Products', 'admin menu', 'webesia-wa-product-catalog' ),
-		'featured_image'     => esc_html__( 'Gambar Utama', 'webesia-wa-product-catalog' ),
-		'set_featured_image' => esc_html__( 'Atur Gambar Utama', 'webesia-wa-product-catalog' ),
-		'remove_featured_image' => esc_html__( 'Hapus Gambar Utama', 'webesia-wa-product-catalog' ),
-		'use_featured_image' => esc_html__( 'Gunakan sebagai Gambar Utama', 'webesia-wa-product-catalog' ),
+		'parent_item_colon'  => esc_html__( 'Parent Products:', 'webesia-wa-product-catalog' ),
+		'not_found'          => esc_html__( 'No products found.', 'webesia-wa-product-catalog' ),
+		'not_found_in_trash' => esc_html__( 'No products found in Trash.', 'webesia-wa-product-catalog' ),
+		'featured_image'     => esc_html__( 'Main Image', 'webesia-wa-product-catalog' ),
+		'set_featured_image' => esc_html__( 'Set Main Image', 'webesia-wa-product-catalog' ),
+		'remove_featured_image' => esc_html__( 'Remove Main Image', 'webesia-wa-product-catalog' ),
+		'use_featured_image' => esc_html__( 'Use as Main Image', 'webesia-wa-product-catalog' ),
 	];
 
 	$product_slug = get_option( 'wpwa_product_slug', 'produk' );
@@ -47,7 +50,24 @@ function wpwa_register_post_type() {
 
 	// Register Taxonomy
 	register_taxonomy( 'product_category', 'simple_product', [
-		'label'        => esc_html__( 'Categories', 'webesia-wa-product-catalog' ),
+		'labels' => [
+			'name'                       => _x( 'Categories', 'taxonomy general name', 'webesia-wa-product-catalog' ),
+			'singular_name'              => _x( 'Category', 'taxonomy singular name', 'webesia-wa-product-catalog' ),
+			'search_items'               => esc_html__( 'Search Categories', 'webesia-wa-product-catalog' ),
+			'popular_items'              => esc_html__( 'Popular Categories', 'webesia-wa-product-catalog' ),
+			'all_items'                  => esc_html__( 'All Categories', 'webesia-wa-product-catalog' ),
+			'parent_item'                => esc_html__( 'Parent Category', 'webesia-wa-product-catalog' ),
+			'parent_item_colon'          => esc_html__( 'Parent Category:', 'webesia-wa-product-catalog' ),
+			'edit_item'                  => esc_html__( 'Edit Category', 'webesia-wa-product-catalog' ),
+			'update_item'                => esc_html__( 'Update Category', 'webesia-wa-product-catalog' ),
+			'add_new_item'               => esc_html__( 'Add New Category', 'webesia-wa-product-catalog' ),
+			'new_item_name'              => esc_html__( 'New Category Name', 'webesia-wa-product-catalog' ),
+			'separate_items_with_commas' => esc_html__( 'Separate categories with commas', 'webesia-wa-product-catalog' ),
+			'add_or_remove_items'        => esc_html__( 'Add or remove categories', 'webesia-wa-product-catalog' ),
+			'choose_from_most_used'      => esc_html__( 'Choose from the most used categories', 'webesia-wa-product-catalog' ),
+			'not_found'                  => esc_html__( 'No categories found.', 'webesia-wa-product-catalog' ),
+			'menu_name'                  => esc_html__( 'Categories', 'webesia-wa-product-catalog' ),
+		],
 		'rewrite'      => [ 'slug' => 'product-category' ],
 		'hierarchical' => true,
 		'show_in_rest' => true,
@@ -101,12 +121,6 @@ function wpwa_add_product_meta_boxes() {
 	}, 999 );
 }
 
-// Force rename Featured Image metabox
-add_action( 'do_meta_boxes', 'wpwa_rename_featured_image_box' );
-function wpwa_rename_featured_image_box() {
-	remove_meta_box( 'postimagediv', 'simple_product', 'side' );
-	add_meta_box( 'postimagediv', esc_html__( 'Gambar Utama', 'webesia-wa-product-catalog' ), 'post_thumbnail_meta_box', 'simple_product', 'side', 'low' );
-}
 
 function wpwa_product_excerpt_meta_box_html( $post ) {
 	?>
@@ -114,16 +128,16 @@ function wpwa_product_excerpt_meta_box_html( $post ) {
 		<div class="wpwa-premium-header">
 			<div class="wpwa-header-left">
 				<span class="dashicons dashicons-editor-alignleft"></span>
-				<label for="wpwa_custom_excerpt"><?php esc_html_e( 'Kutipan / Deskripsi Singkat', 'webesia-wa-product-catalog' ); ?></label>
+				<label for="wpwa_custom_excerpt"><?php esc_html_e( 'Short Description / Excerpt', 'webesia-wa-product-catalog' ); ?></label>
 			</div>
 			<div class="wpwa-header-right">
-				<span class="wpwa-hint-text"><?php esc_html_e( 'Tampilkan ringkasan produk untuk memikat pembeli di halaman katalog.', 'webesia-wa-product-catalog' ); ?></span>
+				<span class="wpwa-hint-text"><?php esc_html_e( 'Display a product summary to attract buyers on the catalog page.', 'webesia-wa-product-catalog' ); ?></span>
 			</div>
 		</div>
 		<div class="wpwa-meta-field full-width no-label">
-			<textarea id="wpwa_custom_excerpt" name="excerpt" rows="3" maxlength="90" placeholder="<?php esc_attr_e( 'Contoh: Layanan profesional terintegrasi untuk meningkatkan performa bisnis Anda...', 'webesia-wa-product-catalog' ); ?>"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea>
+			<textarea id="wpwa_custom_excerpt" name="excerpt" rows="3" maxlength="90" placeholder="<?php esc_attr_e( 'Example: Premium industrial tank with optimized capacity for your business needs...', 'webesia-wa-product-catalog' ); ?>"><?php echo esc_textarea( $post->post_excerpt ); ?></textarea>
 			<div class="wpwa-field-info">
-				<p><?php esc_html_e( 'Kutipan adalah teks ringkas operasional yang akan tampil di kartu produk.', 'webesia-wa-product-catalog' ); ?> <span class="wpwa-char-count-wrap">(<span id="wpwa-char-count">0</span>/90)</span></p>
+				<p><?php esc_html_e( 'Excerpt is a concise operational text that will appear in the product card.', 'webesia-wa-product-catalog' ); ?> <span class="wpwa-char-count-wrap">(<span id="wpwa-char-count">0</span>/90)</span></p>
 			</div>
 		</div>
 		<div style="clear: both; display: block; height: 10px; width: 100%;"></div>
@@ -265,9 +279,9 @@ function wpwa_product_tabs_meta_box_html( $post ) {
 						<div class="wpwa-tab-header">
 							<div class="wpwa-tab-header-left">
 								<span class="dashicons dashicons-menu sort-handle"></span>
-								<input type="text" name="wpwa_tabs[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $tab['title'] ); ?>" class="widefat" placeholder="<?php esc_attr_e( 'Judul Tab (misal: Fitur)', 'webesia-wa-product-catalog' ); ?>">
+								<input type="text" name="wpwa_tabs[<?php echo esc_attr( $index ); ?>][title]" value="<?php echo esc_attr( $tab['title'] ); ?>" class="widefat" placeholder="<?php esc_attr_e( 'Tab Title (e.g. Features)', 'webesia-wa-product-catalog' ); ?>">
 							</div>
-							<a href="#" class="wpwa-remove-tab" title="<?php esc_attr_e( 'Hapus Tab', 'webesia-wa-product-catalog' ); ?>">
+							<a href="#" class="wpwa-remove-tab" title="<?php esc_attr_e( 'Remove Tab', 'webesia-wa-product-catalog' ); ?>">
 								<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 							</a>
 						</div>
@@ -294,7 +308,7 @@ function wpwa_product_tabs_meta_box_html( $post ) {
 		</div>
 		<div class="wpwa-tabs-footer">
 			<button type="button" class="button button-secondary" id="wpwa-add-tab">
-				<span class="dashicons dashicons-plus-alt2"></span> <?php esc_html_e( 'Tambah Tab Baru', 'webesia-wa-product-catalog' ); ?>
+				<span class="dashicons dashicons-plus-alt2"></span> <?php esc_html_e( 'Add New Tab', 'webesia-wa-product-catalog' ); ?>
 			</button>
 		</div>
 
@@ -310,9 +324,9 @@ function wpwa_product_tabs_meta_box_html( $post ) {
 			<div class="wpwa-tab-header">
 				<div class="wpwa-tab-header-left">
 					<span class="dashicons dashicons-menu sort-handle"></span>
-					<input type="text" name="wpwa_tabs[{index}][title]" value="" class="widefat" placeholder="<?php esc_attr_e( 'Judul Tab', 'webesia-wa-product-catalog' ); ?>">
+					<input type="text" name="wpwa_tabs[{index}][title]" value="" class="widefat" placeholder="<?php esc_attr_e( 'Tab Title', 'webesia-wa-product-catalog' ); ?>">
 				</div>
-				<a href="#" class="wpwa-remove-tab" title="<?php esc_attr_e( 'Hapus Tab', 'webesia-wa-product-catalog' ); ?>">
+				<a href="#" class="wpwa-remove-tab" title="<?php esc_attr_e( 'Remove Tab', 'webesia-wa-product-catalog' ); ?>">
 					<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 				</a>
 			</div>
@@ -380,7 +394,7 @@ function wpwa_product_tabs_meta_box_html( $post ) {
 
 		$list.on('click', '.wpwa-remove-tab', function(e) {
 			e.preventDefault();
-			if (confirm('Apakah Anda yakin ingin menghapus tab ini?')) {
+			if (confirm('<?php esc_html_e( 'Are you sure you want to remove this tab?', 'webesia-wa-product-catalog' ); ?>')) {
 				var $item = $(this).closest('.wpwa-tab-item');
 				var editorId = $item.find('textarea').attr('id') || $item.find('.wp-editor-area').attr('id');
 				
@@ -523,6 +537,14 @@ function wpwa_save_product_meta( $post_id, $post ) {
 add_filter( 'template_include', 'wpwa_product_templates' );
 function wpwa_product_templates( $template ) {
 	if ( is_singular( 'simple_product' ) ) {
+		// If Elementor Pro Theme Builder is active and has a template for this post, let it handle it
+		if ( class_exists( 'ElementorPro\Modules\ThemeBuilder\Module' ) ) {
+			$location_manager = \ElementorPro\Modules\ThemeBuilder\Module::instance()->get_locations_manager();
+			if ( ! empty( $location_manager->get_location_data( 'single' ) ) ) {
+				return $template;
+			}
+		}
+
 		$new_template = WPWA_PATH . 'includes/single-product.php';
 		if ( file_exists( $new_template ) ) {
 			return $new_template;
@@ -672,21 +694,21 @@ function wpwa_product_updated_messages( $messages ) {
 	$messages['simple_product'] = [
 		0  => '', // Unused. Messages start at index 1.
 		/* translators: %s: product permalink URL */
-		1  => sprintf( esc_html__( 'Produk berhasil diperbarui. <a href="%s">Lihat produk</a>', 'webesia-wa-product-catalog' ), esc_url( get_permalink( $post->ID ) ) ),
-		2  => esc_html__( 'Custom field diperbarui.', 'webesia-wa-product-catalog' ),
-		3  => esc_html__( 'Custom field dihapus.', 'webesia-wa-product-catalog' ),
-		4  => esc_html__( 'Produk diperbarui.', 'webesia-wa-product-catalog' ),
-		/* translators: %s: revision date */
-		5  => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Produk dikembalikan ke revisi dari %s', 'webesia-wa-product-catalog' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		1  => sprintf( esc_html__( 'Product updated. <a href="%s">View product</a>', 'webesia-wa-product-catalog' ), esc_url( get_permalink( $post->ID ) ) ),
+		2  => esc_html__( 'Custom field updated.', 'webesia-wa-product-catalog' ),
+		3  => esc_html__( 'Custom field deleted.', 'webesia-wa-product-catalog' ),
+		4  => esc_html__( 'Product updated.', 'webesia-wa-product-catalog' ),
+		/* translators: %s: date and time of the revision */
+		5  => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Product restored to revision from %s', 'webesia-wa-product-catalog' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		/* translators: %s: product permalink URL */
-		6  => sprintf( esc_html__( 'Produk berhasil diterbitkan. <a href="%s">Lihat produk</a>', 'webesia-wa-product-catalog' ), esc_url( get_permalink( $post->ID ) ) ),
-		7  => esc_html__( 'Produk disimpan.', 'webesia-wa-product-catalog' ),
+		6  => sprintf( esc_html__( 'Product published. <a href="%s">View product</a>', 'webesia-wa-product-catalog' ), esc_url( get_permalink( $post->ID ) ) ),
+		7  => esc_html__( 'Product saved.', 'webesia-wa-product-catalog' ),
 		/* translators: %s: preview URL */
-		8  => sprintf( esc_html__( 'Produk diajukan. <a target="_blank" href="%s">Pratinjau produk</a>', 'webesia-wa-product-catalog' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		8  => sprintf( esc_html__( 'Product submitted. <a target="_blank" href="%s">Preview product</a>', 'webesia-wa-product-catalog' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 		/* translators: %1$s: scheduled date, %2$s: preview URL */
-		9  => sprintf( esc_html__( 'Produk dijadwalkan untuk: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Pratinjau produk</a>', 'webesia-wa-product-catalog' ), date_i18n( esc_html__( 'M j, Y @ G:i', 'webesia-wa-product-catalog' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+		9  => sprintf( esc_html__( 'Product scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview product</a>', 'webesia-wa-product-catalog' ), date_i18n( esc_html__( 'M j, Y @ G:i', 'webesia-wa-product-catalog' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
 		/* translators: %s: preview URL */
-		10 => sprintf( esc_html__( 'Draf produk diperbarui. <a target="_blank" href="%s">Pratinjau produk</a>', 'webesia-wa-product-catalog' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+		10 => sprintf( esc_html__( 'Product draft updated. <a target="_blank" href="%s">Preview product</a>', 'webesia-wa-product-catalog' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 	];
 
 	return $messages;

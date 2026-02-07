@@ -12,6 +12,9 @@ function wpwa_products_shortcode( $atts ) {
 		'posts_per_page' => -1,
 		'category'       => '',
 		'filter'         => 'no', // New attribute: yes/no
+        'columns'        => 3,
+        'columns_tablet' => 2,
+        'columns_mobile' => 1,
 	], $atts );
 
 	// Override with URL parameters if present
@@ -113,8 +116,13 @@ function wpwa_products_shortcode( $atts ) {
 		<?php
 	}
 
-	if ( $query->have_posts() ) : ?>
-		<div class="wpwa-product-grid">
+	if ( $query->have_posts() ) : 
+        $grid_style = '';
+        if ( ! empty( $atts['columns'] ) ) $grid_style .= '--wpwa-columns: ' . intval( $atts['columns'] ) . '; ';
+        if ( ! empty( $atts['columns_tablet'] ) ) $grid_style .= '--wpwa-columns-tablet: ' . intval( $atts['columns_tablet'] ) . '; ';
+        if ( ! empty( $atts['columns_mobile'] ) ) $grid_style .= '--wpwa-columns-mobile: ' . intval( $atts['columns_mobile'] ) . '; ';
+        ?>
+		<div class="wpwa-product-grid" style="<?php echo esc_attr( $grid_style ); ?>">
 			<?php while ( $query->have_posts() ) : $query->the_post(); 
 				$price = get_post_meta( get_the_ID(), '_product_price', true );
 				$min_order = get_post_meta( get_the_ID(), '_product_min_order', true ) ?: 1;
@@ -141,7 +149,7 @@ function wpwa_products_shortcode( $atts ) {
 							$display_price = $has_sale ? $sale_price : $price;
 							
 							if ( $has_sale ) : ?>
-								<div class="wpwa-sale-badge"><?php esc_html_e( 'DISKON', 'webesia-wa-product-catalog' ); ?></div>
+								<div class="wpwa-sale-badge"><?php esc_html_e( 'SALE', 'webesia-wa-product-catalog' ); ?></div>
 							<?php endif; ?>
 							<?php if ( has_post_thumbnail() ) : ?>
 								<?php the_post_thumbnail( 'medium' ); ?>
@@ -175,7 +183,7 @@ function wpwa_products_shortcode( $atts ) {
 						
 						<div class="wpwa-card-footer">
 							<a href="<?php echo esc_url( get_permalink() ); ?>" class="wpwa-more-link">
-								<?php esc_html_e( 'Selengkapnya', 'webesia-wa-product-catalog' ); ?> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+								<?php esc_html_e( 'View Details', 'webesia-wa-product-catalog' ); ?> <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
 							</a>
 							<button class="wpwa-action-btn-wa wpwa-trigger-order" 
 									data-id="<?php echo esc_attr( get_the_ID() ); ?>" 
@@ -191,28 +199,21 @@ function wpwa_products_shortcode( $atts ) {
 		</div>
 		
 		<?php
-		// Verify if pagination is needed
-		// Always try to render pagination
-		$pagination = paginate_links( [
-			'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-			'format'    => '?paged=%#%',
-			'current'   => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ), ( isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1 ) ),
-			'total'     => $query->max_num_pages,
-			'prev_text' => esc_html__( '« Sebelumnya', 'webesia-wa-product-catalog' ),
-			'next_text' => esc_html__( 'Selanjutnya »', 'webesia-wa-product-catalog' ),
-			'type'      => 'list',
-		] );
+		// Only show pagination if there is more than 1 page
+		if ( $query->max_num_pages > 1 ) {
+			$pagination = paginate_links( [
+				'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+				'format'    => '?paged=%#%',
+				'current'   => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ), ( isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1 ) ),
+				'total'     => $query->max_num_pages,
+				'prev_text' => esc_html__( '« Previous', 'webesia-wa-product-catalog' ),
+				'next_text' => esc_html__( 'Next »', 'webesia-wa-product-catalog' ),
+				'type'      => 'list',
+			] );
 
-		if ( $pagination ) {
-			echo '<div class="wpwa-pagination">' . $pagination . '</div>';
-		} else {
-			// Force display for single page if requested
-			echo '<div class="wpwa-pagination">';
-			echo '<ul class="page-numbers">';
-			echo '<li><span aria-current="page" class="page-numbers current">1</span></li>';
-			echo '<li><span class="page-numbers next disabled" style="opacity:0.5; cursor:not-allowed;">' . esc_html__( 'Selanjutnya »', 'webesia-wa-product-catalog' ) . '</span></li>'; 
-			echo '</ul>';
-			echo '</div>';
+			if ( $pagination ) {
+				echo '<div class="wpwa-pagination">' . $pagination . '</div>';
+			}
 		}
 		
 		wp_reset_postdata(); ?>
@@ -244,7 +245,7 @@ function wpwa_order_modal_html() {
 			</div>
 			<div class="wpwa-modal-header">
 				<h2><?php esc_html_e( 'Order Details', 'webesia-wa-product-catalog' ); ?></h2>
-				<p id="wpwa-modal-welcome-msg"><?php echo esc_html( get_option('wpwa_welcome_msg') ); ?></p>
+				<p id="wpwa-modal-welcome-msg"><?php echo esc_html( __( get_option('wpwa_welcome_msg', 'Please fill out the form below to order.'), 'webesia-wa-product-catalog' ) ); ?></p>
 			</div>
 			
 			<form id="wpwa-order-form">
@@ -252,10 +253,10 @@ function wpwa_order_modal_html() {
 				
 				<?php 
 				$default_form = [
-					['id' => 'customer_name',    'label' => 'Nama Anda',         'type' => 'text',     'placeholder' => 'Budi Santoso', 'required' => true, 'enabled' => true],
-					['id' => 'customer_phone',   'label' => 'Nomor WhatsApp',    'type' => 'text',     'placeholder' => '08xxxxxxxxxx', 'required' => true, 'enabled' => true],
-					['id' => 'customer_address', 'label' => 'Alamat Pengiriman', 'type' => 'textarea', 'placeholder' => 'Nama Jalan, Kota, Kode Pos', 'required' => true, 'enabled' => true],
-					['id' => 'customer_note',    'label' => 'Catatan',           'type' => 'textarea', 'placeholder' => 'Tanggal pengiriman, warna, dll.', 'required' => false, 'enabled' => true],
+					['id' => 'customer_name',    'label' => 'Your Name',         'type' => 'text',     'placeholder' => 'John Doe', 'required' => true, 'enabled' => true],
+					['id' => 'customer_phone',   'label' => 'WhatsApp Number',    'type' => 'text',     'placeholder' => '628xxxxxxxxxx', 'required' => true, 'enabled' => true],
+					['id' => 'customer_address', 'label' => 'Shipping Address', 'type' => 'textarea', 'placeholder' => 'Street Name, City, Postal Code', 'required' => true, 'enabled' => true],
+					['id' => 'customer_note',    'label' => 'Note',           'type' => 'textarea', 'placeholder' => 'Delivery Date, Color, etc', 'required' => false, 'enabled' => true],
 				];
 				$custom_form = get_option( 'wpwa_custom_form', $default_form );
 				?>
@@ -267,7 +268,7 @@ function wpwa_order_modal_html() {
 							<h3 id="wpwa-modal-product-name"></h3>
 							
 							<div class="wpwa-form-row">
-								<label for="wpwa-qty"><?php esc_html_e( 'Jumlah', 'webesia-wa-product-catalog' ); ?></label>
+								<label for="wpwa-qty"><?php esc_html_e( 'Quantity', 'webesia-wa-product-catalog' ); ?></label>
 								<input type="number" id="wpwa-qty" name="qty" min="1" value="1" required>
 							</div>
 
@@ -276,18 +277,18 @@ function wpwa_order_modal_html() {
 							$name_field = array_values(array_filter($custom_form, function($f) { return $f['id'] === 'customer_name'; }))[0] ?? null;
 							if ( $name_field && $name_field['enabled'] ) : ?>
 								<div class="wpwa-form-row">
-									<label for="wpwa-field-<?php echo esc_attr($name_field['id']); ?>"><?php echo esc_html($name_field['label']); ?></label>
+									<label for="wpwa-field-<?php echo esc_attr($name_field['id']); ?>"><?php echo esc_html( __($name_field['label'], 'webesia-wa-product-catalog') ); ?></label>
 									<input type="<?php echo esc_attr($name_field['type']); ?>" 
 										   id="wpwa-field-<?php echo esc_attr($name_field['id']); ?>" 
 										   name="wpwa_field_<?php echo esc_attr($name_field['id']); ?>" 
-										   placeholder="<?php echo esc_attr($name_field['placeholder']); ?>"
+										   placeholder="<?php echo esc_attr( __($name_field['placeholder'], 'webesia-wa-product-catalog') ); ?>"
 										   <?php echo $name_field['required'] ? 'required' : ''; ?>>
 								</div>
 							<?php endif; ?>
 
 							<div class="wpwa-form-total">
-								<span><?php esc_html_e( 'TOTAL ESTIMASI:', 'webesia-wa-product-catalog' ); ?></span>
-								<span id="wpwa-modal-total-display">Rp0</span>
+								<span><?php esc_html_e( 'ESTIMATED TOTAL:', 'webesia-wa-product-catalog' ); ?></span>
+								<span id="wpwa-modal-total-display">$0</span>
 							</div>
 						</div>
 					</div>
@@ -299,18 +300,18 @@ function wpwa_order_modal_html() {
 							if ( $field['id'] === 'customer_name' || !$field['enabled'] ) continue;
 							?>
 							<div class="wpwa-form-row">
-								<label for="wpwa-field-<?php echo esc_attr($field['id']); ?>"><?php echo esc_html($field['label']); ?></label>
+								<label for="wpwa-field-<?php echo esc_attr($field['id']); ?>"><?php echo esc_html( __($field['label'], 'webesia-wa-product-catalog') ); ?></label>
 								<?php if ( 'textarea' === $field['type'] ) : ?>
 									<textarea id="wpwa-field-<?php echo esc_attr($field['id']); ?>" 
 											  name="wpwa_field_<?php echo esc_attr($field['id']); ?>" 
 											  rows="2" 
-											  placeholder="<?php echo esc_attr($field['placeholder']); ?>"
+											  placeholder="<?php echo esc_attr( __($field['placeholder'], 'webesia-wa-product-catalog') ); ?>"
 											  <?php echo $field['required'] ? 'required' : ''; ?>></textarea>
 								<?php else : ?>
 									<input type="text" 
 										   id="wpwa-field-<?php echo esc_attr($field['id']); ?>" 
 										   name="wpwa_field_<?php echo esc_attr($field['id']); ?>" 
-										   placeholder="<?php echo esc_attr($field['placeholder']); ?>"
+										   placeholder="<?php echo esc_attr( __($field['placeholder'], 'webesia-wa-product-catalog') ); ?>"
 										   <?php echo $field['required'] ? 'required' : ''; ?>>
 								<?php endif; ?>
 							</div>

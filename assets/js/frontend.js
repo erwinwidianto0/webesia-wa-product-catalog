@@ -84,21 +84,20 @@ jQuery(document).ready(function ($) {
 
         try {
             // Use custom currency symbol
-            var currencySymbol = wpwa_ajax.currency_symbol || 'Rp';
+            var currencySymbol = wpwa_ajax.currency_symbol || '$';
             var currencyCode = (currencySymbol === 'Rp' || currencySymbol === 'IDR') ? 'IDR' : 'USD';
 
             // If it's IDR or RP, use specific ID formatting
             if (currencyCode === 'IDR') {
                 const formatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(total);
-                // Replace IDR with custom symbol if needed (e.g. if symbol is 'Rp' but Intl gives 'IDR')
-                $('#wpwa-modal-total-display').text(formatted.replace('IDR', 'Rp'));
+                $('#wpwa-modal-total-display').text(formatted.replace('IDR', currencySymbol === 'IDR' ? 'IDR' : 'Rp'));
             } else {
                 // For others, just append symbol
                 $('#wpwa-modal-total-display').text(currencySymbol + ' ' + total.toLocaleString('en-US', { minimumFractionDigits: 2 }));
             }
         } catch (e) {
             // Absolute fallback
-            var currencySymbol = wpwa_ajax.currency_symbol || 'Rp';
+            var currencySymbol = wpwa_ajax.currency_symbol || '$';
             $('#wpwa-modal-total-display').text(currencySymbol + ' ' + total);
         }
     }
@@ -110,7 +109,7 @@ jQuery(document).ready(function ($) {
         // Proceed directly to submission
 
         const submitBtn = $('.wpwa-submit-order');
-        submitBtn.prop('disabled', true).text('Processing...');
+        submitBtn.prop('disabled', true).text(wpwa_ajax.msg_processing || 'Processing...');
 
         // Context-aware data collection (Dynamic Fields Support)
         const $form = $(this);
@@ -135,12 +134,12 @@ jQuery(document).ready(function ($) {
                     window.location.href = response.data.wa_url;
                 } else {
                     alert('Error: ' + response.data);
-                    submitBtn.prop('disabled', false).text('Send Order via WhatsApp');
+                    submitBtn.prop('disabled', false).text(wpwa_ajax.msg_send_btn || 'Send Order via WhatsApp');
                 }
             },
             error: function () {
-                alert('An error occurred. Please try again.');
-                submitBtn.prop('disabled', false).text('Send Order via WhatsApp');
+                alert(wpwa_ajax.msg_error || 'An error occurred. Please try again.');
+                submitBtn.prop('disabled', false).text(wpwa_ajax.msg_send_btn || 'Send Order via WhatsApp');
             }
         });
     });
