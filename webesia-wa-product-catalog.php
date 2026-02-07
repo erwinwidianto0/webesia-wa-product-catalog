@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: WA WebEsia Catalog
- * Project-Id-Version: WA WebEsia Catalog 1.0.0
+ * Plugin Name: WebEsia Catalog
+ * Project-Id-Version: WebEsia Catalog 1.0.0
  * Description: Catalog products with a seamless chat order system. Developed by Erwin Widianto (WebEsia).
  * Version: 1.0.0
  * Author: WebEsia

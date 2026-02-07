@@ -1,4 +1,4 @@
-=== WA WebEsia Catalog ===
+=== WebEsia Catalog ===
 Contributors: erwinwidianto, WebEsia
 Tags: whatsapp, catalog, store, product, order
 Requires at least: 5.0
